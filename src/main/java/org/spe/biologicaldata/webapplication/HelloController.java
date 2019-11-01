@@ -7,8 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HelloController {
 
     @RequestMapping("/")
-    public String index() {
-        return "Greetings from Spring Boot!";
+    public String homePage() {
+        return "HomePage!";
+    }
+
+    @RequestMapping("/signin")
+    public String signInPage() {
+        return "Sign in!";
+    }
+
+    @RequestMapping("/signup")
+    public String signUpPage() {
+        return "Sign up!";
     }
 
 }
