@@ -1,13 +1,9 @@
-### Resources folder- does not work###
-*.properties
-*.jks
-
 ### Spring boot stuff ###
 HELP.md
 target/
 
 !.mvn/wrapper/maven-wrapper.jar
-#!**/src/main/**
+!**/src/main/**
 !**/src/test/**
 
 ### STS ###
