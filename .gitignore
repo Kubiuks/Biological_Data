@@ -1,5 +1,6 @@
 ### Resources folder- does not work###
-/src/main/resources/*
+/src/main/resources/application.properties
+
 
 ### Spring boot stuff ###
 HELP.md
