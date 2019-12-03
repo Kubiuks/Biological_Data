@@ -1,7 +1,7 @@
 ### Resources folder- does not work###
 /src/main/resources/application.properties
 
-
+*.jpg
 ### Spring boot stuff ###
 HELP.md
 target/
