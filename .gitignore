@@ -5,6 +5,9 @@
 HELP.md
 target/
 
+
+*.jpg
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
