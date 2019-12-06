@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+<p th:text="'A table with ' + ${numberOfRows} + ' rows:'"></p>
+<table>
+    <tbody th:each="number: ${numbers}">
+    <tr>
+        <td th:text="${number}">
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
