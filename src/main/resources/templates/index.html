@@ -5,14 +5,10 @@
     <title>List</title>
 </head>
 <body>
-<p  th:text = "'A table with ' + ${numberOfRows} + ' rows:'"></p>
-<table>
-    <tbody th:each="number: ${numbers}">
-            <tr>
-                <td th:text = "${number}">
-                </td>
-            </tr>
-    </tbody>
-</table>
+    <p>Write a number!</p>
+    <form method="post">
+        <input type="text" name="number">
+        <button type="submit">Submit!</button>
+    </form>
 </body>
 </html>
