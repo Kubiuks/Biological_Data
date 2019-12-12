@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+</head>
+<body>
+<div>
+    <p  th:text = "'Images in Gallery:'"></p>
+</div>
+<div>
+    <table class="list-table">
+        <tbody th:each = "image: ${images}" class="list-element">
+            <tr>
+                <td>
+                    <img th:src = "@{ ${image.getImageUrl()} }" th:alt = "${image.getTitle()}" class="element-image">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
