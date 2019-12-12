@@ -50,6 +50,16 @@ public class HelloController {
         return "table";
     }
 
+
+    @RequestMapping(value = "/extractText")
+    public  String extractText() {
+        return "extractText";
+    }
+
+    @RequestMapping(value = "/extractInfo")
+    public  String extractInfo() {
+        return "extractInfo";
+    }
     @GetMapping("/upload")
     public String upload(Model model) {
         return "upload";
