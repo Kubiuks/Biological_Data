@@ -1,41 +1,182 @@
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BiologicalData</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/styles.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../scripts/main.js"></script>
+<!--    <script type="text/javascript" src="scripts/getimages.js"></script>-->
 </head>
 
 
 
-<!--
-<body>
-    <p>Write a number!</p>
-    <form method="post">
-        <input type="text" name="number">
-        <button type="submit">Submit!</button>
-    </form>
-</body-->
 
 
-<body>
-    <header>
-      <nav>
+<header>
+    <h1 id="elo">Biological Data<br> </h1>
+    <ul>
+        <li><a href="extractText.html">Extract Text</a></li>
+        <li></li>
+        <li><a href="extractInfo.html">Extract Information</a></li>
+    </ul>
+</header>
+
+<div id="top"></div>
+<section class="gallery">
+    <div class="row">
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="pages/location.html">Locations</a></li>
-          <li><a href="pages/contact.html">Contact</a></li>
-            </ul>
-      </nav>
-    </header>
-    <h1>Home</h1>
+            <a href="#" class="close"></a>
+            <li>
+                <a class="image" href="#item01">
+                    <img id="zdj" src="../images/Moth%20Trap%20-%201931%20-%20Data.JPG" alt="">
+                </a>
+            </li>
 
-</body>
+            <li>
+                <a class="image" href="#item02">
+                    <img src="../images/Moth%20Trap%20-%201931.JPG" alt="">
+                </a>
+            </li>
 
-<footer>
-    <p>No siema</p>
-</footer>
+            <li>
+                <a class="image" href="#item03">
+                    <img src="../images/Notes%20on%20Butterflies%20&%20Moths%20of%20Somersetshire%20-%20Data%20ii.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item04">
+                    <img src="../images/Vol%20VII%20-%201960-63%20-%20Data%20ii.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item05">
+                    <img src="../images/Entomological%20Notes%20Vol%20I%201946-48%20-%20Data%20ii.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item06">
+                    <img src="../images/Collector%20info%20-%20moth%20book%201.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item07">
+                    <img src="../images/Vol%20VIII%20-%20Data.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item08">
+                    <img src="../images/Volumes%20VIII%20-%20XI.JPG" alt="">
+                </a>
+            </li>
+        </ul>
+    </div> <!-- / row -->
+
+    <!-- Item 01 -->
+    <div id="item01" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 01</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+
+            <img src="../images/Moth%20Trap%20-%201931%20-%20Data.JPG" alt="">
+        </div>
+    </div> <!-- / row -->
+
+<!--    </div> &lt;!&ndash; / Item 02 &ndash;&gt;-->
+
+    <!-- Item 02 -->
+    <div id="item02" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="../images/Moth%20Trap%20-%201931.JPG" alt="">
+        </div> <!-- / row -->
+
+    </div> <!-- / Item 02 -->
+
+    <div id="item03" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="../images/Notes%20on%20Butterflies%20&%20Moths%20of%20Somersetshire%20-%20Data%20ii.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item04" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="../images/Vol%20VII%20-%201960-63%20-%20Data%20ii.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item05" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="../images/Entomological%20Notes%20Vol%20I%201946-48%20-%20Data%20ii.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item06" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="../images/Collector%20info%20-%20moth%20book%201.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item07" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="../images/Vol%20VIII%20-%20Data.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item08" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="../images/Volumes%20VIII%20-%20XI.JPG" alt="">
+        </div>
+
+    </div>
+
+
+</section> <!-- / projects -->
 
 
 </html>
