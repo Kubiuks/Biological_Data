@@ -20,7 +20,16 @@ public class Database implements DatabaseController {
 
         //Load files from static/images into the in memory database
         File folder = new File("src/main/resources/static/images");
-        List<File> files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
+        List<File> files;
+        try{
+        
+        files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
+    }
+        catch(NullPointerException e){
+            boolean bool = folder.mkdir();
+            files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
+        
+        }
 
         for (File file : files) {
             if (file.isFile()) {

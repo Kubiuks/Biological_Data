@@ -11,13 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DatabaseTest {
 
-    private DatabaseController databaseController;
+   private DatabaseController databaseController;
 
     @Autowired
     DatabaseTest(DatabaseController databaseController) {
         this.databaseController = databaseController;
     }
-
 
     @Test
     void testStoreImageWithTwoArguments(){
