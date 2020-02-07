@@ -7,8 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link href="css/styles.css" rel="stylesheet"/>
+    <link href="css/sidebar.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 
 </head>
 
@@ -16,14 +18,26 @@
 
 
 <header>
-    <h1 id="elo">Biological Data<br> </h1>
-    <ul>
-        <li><a href="upload">Upload</a></li>
-        <li><a href="extractText">Extract Text</a></li>
-        <li><a href="extractInfo">Extract Information</a></li>
-        <li><a href="gallery">Gallery</a></li>
-    </ul>
+    <h1 id="elo">Biological Data</h1>
 </header>
+
+
+<div class="sidebar">
+        <h2>Sidebar</h2>
+        <ul>
+            <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="/extractText"><i class="fas fa-font"></i></i>Text Extract</a></li>
+            <li><a href="/extractInfo"><i class="fas fa-info"></i></i>Information Extract</a></li>
+            <li><a href="/gallery"><i class="fas fa-address-card"></i>Gallery</a></li>
+            <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>
+            <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
+        </ul>
+        <div class="social_media">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+</div>
 
 <div id="top"></div>
 <section class="gallery">
@@ -177,6 +191,5 @@
 
 
 </section> <!-- / projects -->
-
 
 </html>
