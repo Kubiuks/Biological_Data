@@ -1,4 +1,4 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import java.util.Date;
  * relevant information for identifying that diary / book is also present
  */
 @Entity @Table(name = "images")
-class Image {
+public class Image {
 
     /**
      * The id of the row, primary key

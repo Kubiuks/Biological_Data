@@ -1,5 +1,6 @@
 package org.spe.biologicaldata.webapplication;
 
+import org.spe.biologicaldata.webapplication.model.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

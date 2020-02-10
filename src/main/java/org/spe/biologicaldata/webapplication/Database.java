@@ -1,5 +1,7 @@
 package org.spe.biologicaldata.webapplication;
 
+import org.spe.biologicaldata.webapplication.model.Image;
+import org.spe.biologicaldata.webapplication.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,13 +24,10 @@ public class Database implements DatabaseController {
         File folder = new File("src/main/resources/static/images");
         List<File> files;
         try{
-        
-        files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
-    }
-        catch(NullPointerException e){
+            files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
+        } catch(NullPointerException e) {
             boolean bool = folder.mkdir();
             files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
-        
         }
 
         for (File file : files) {
@@ -43,14 +42,14 @@ public class Database implements DatabaseController {
 
     @Override
     public void storeImage(Image imageInfo, MultipartFile image) {
-        String pathUrl = storageService.store(image);
+        String pathUrl = storageService.store(image, true);
         imageInfo.setImageUrl(pathUrl);
         imageRepository.save(imageInfo);
     }
 
     @Override
     public void storeImage(MultipartFile image) {
-        String pathUrl = storageService.store(image);
+        String pathUrl = storageService.store(image, true);
         Image imageRow = new Image(pathUrl, image.getName(), "", "", "", "");
         imageRepository.save(imageRow);
     }
@@ -58,7 +57,7 @@ public class Database implements DatabaseController {
     @Override
     public void storeImage(String title, String author, String writtenDate,
                            String page, String description, MultipartFile image) {
-        String pathUrl = storageService.store(image);
+        String pathUrl = storageService.store(image, true);
         Image imageRow = new Image(pathUrl, title, author, writtenDate, page, description);
         imageRepository.save(imageRow);
     }
