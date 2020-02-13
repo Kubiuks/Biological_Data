@@ -13,6 +13,10 @@ import com.google.cloud.vision.v1.Feature.Type;
 import com.google.cloud.vision.v1.Image;
 import com.google.cloud.vision.v1.ImageAnnotatorClient;
 import com.google.protobuf.ByteString;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +26,7 @@ import java.util.List;
 class TextextractTest{
 
 	@Test
-	void extracttest() throws Exception{
+	void testimagecontents() throws Exception{
 			// Instantiates a client
 			try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
@@ -61,8 +65,41 @@ class TextextractTest{
 				}
 			  }
 			}
-		  
 
+
+
+			@Test
+	void getText() throws Exception, IOException {
+		PrintStream out=System.out;
+		String filePath="src/main/resources/static/images/test.jpg";
+  List<AnnotateImageRequest> requests = new ArrayList<>();
+
+  ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+
+  Image img = Image.newBuilder().setContent(imgBytes).build();
+  Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
+  AnnotateImageRequest request =
+      AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+  requests.add(request);
+
+  try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+    BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+    List<AnnotateImageResponse> responses = response.getResponsesList();
+
+    for (AnnotateImageResponse res : responses) {
+      if (res.hasError()) {
+        out.printf("Error: %s\n", res.getError().getMessage());
+        return;
+      }
+
+      // For full list of available annotations, see http://g.co/cloud/vision/docs
+      for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+        out.printf("Text: %s\n", annotation.getDescription());
+        out.printf("Position : %s\n", annotation.getBoundingPoly());
+      }
+    }
+  }
+}
 
 
 	}
