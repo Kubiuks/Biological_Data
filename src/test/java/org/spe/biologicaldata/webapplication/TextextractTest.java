@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.spe.biologicaldata.webapplication.Textextract;
 import static org.junit.jupiter.api.Assumptions.*;
+
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
@@ -12,6 +16,7 @@ import com.google.cloud.vision.v1.Feature;
 import com.google.cloud.vision.v1.Feature.Type;
 import com.google.cloud.vision.v1.Image;
 import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.cloud.vision.v1.ImageAnnotatorSettings;
 import com.google.protobuf.ByteString;
 
 import java.io.FileInputStream;
@@ -27,8 +32,22 @@ class TextextractTest{
 
 	@Test
 	void testimagecontents() throws Exception{
+
+
+		Credentials myCredentials = ServiceAccountCredentials.fromStream(
+			new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
+		
+		ImageAnnotatorSettings imageAnnotatorSettings =
+			ImageAnnotatorSettings.newBuilder()
+			.setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+			.build();
+
+
+
+
+
 			// Instantiates a client
-			try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
+			try (ImageAnnotatorClient vision = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
 
 				// The path to the image file to annotate
 				String fileName = "src/main/resources/static/images/test.jpg";
@@ -70,6 +89,17 @@ class TextextractTest{
 
 			@Test
 	void getText() throws Exception, IOException {
+		Credentials myCredentials = ServiceAccountCredentials.fromStream(
+			new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
+		
+		ImageAnnotatorSettings imageAnnotatorSettings =
+			ImageAnnotatorSettings.newBuilder()
+			.setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+			.build();
+
+
+
+
 		PrintStream out=System.out;
 		String filePath="src/main/resources/static/images/test.jpg";
   List<AnnotateImageRequest> requests = new ArrayList<>();
@@ -82,7 +112,7 @@ class TextextractTest{
       AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
   requests.add(request);
 
-  try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+  try (ImageAnnotatorClient client = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
     BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
     List<AnnotateImageResponse> responses = response.getResponsesList();
 
