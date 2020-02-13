@@ -1,12 +1,10 @@
 ### Resources folder- does not work###
-/src/main/resources/*
+/src/main/resources/application.properties
+
 
 ### Spring boot stuff ###
 HELP.md
 target/
-
-
-*.jpg
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
@@ -26,6 +24,8 @@ target/
 *.iws
 *.iml
 *.ipr
+*.JPG
+*.jpg
 
 ### NetBeans ###
 /nbproject/private/

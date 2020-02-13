@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gallery</title>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <link href="css/sidebar.css" rel="stylesheet"/>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+
+</head>
+<body>
+<header>
+    <p  th:text = "'Images in Gallery:'"></p>
+</header>
+
+<div class="sidebar">
+    <h2>Sidebar</h2>
+    <ul>
+        <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+        <li><a href="/extractText"><i class="fas fa-font"></i></i>Text Extract</a></li>
+        <li><a href="/extractInfo"><i class="fas fa-info"></i></i>Information Extract</a></li>
+        <li><a href="/gallery"><i class="fas fa-address-card"></i>Gallery</a></li>
+        <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>
+        <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
+    </ul>
+    <div class="social_media">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+</div>
+
+<div id="top"></div>
+<section class="gallery">
+    <div class="row">
+        <ul>
+            <a href="#" class="close"></a>
+            <li th:each = "image: ${images}">
+                <a class="image" th:href = "'#' + ${image.getId()}">
+                    <img th:src = "@{ ${image.getImageUrl()} }" th:alt = "${image.getTitle()}" >
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div th:each = "image: ${images}" th:id = "${image.getId()}" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1 th:text = "${image.getTitle()}"></h1>
+                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+
+            <img th:src = "@{ ${image.getImageUrl()} }" th:alt = "${image.getTitle()}">
+
+        </div>
+    </div>
+</section>
+</body>
+</html>
