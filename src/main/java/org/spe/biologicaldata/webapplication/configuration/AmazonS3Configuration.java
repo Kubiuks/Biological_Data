@@ -26,8 +26,11 @@ public class AmazonS3Configuration {
     @Value("${aws.S3.bucketName}")
     private String awsS3BucketName;
 
-    @Value(("${aws.session.token}"))
+    @Value("${aws.session.token}")
     private String awsSessionToken;
+
+    @Value("${aws.S3.galleryPath}")
+    private String awsS3GalleryPath;
 
     @Bean(name = "awsAccessKey")
     public String getAWSAccessKey() {
@@ -37,6 +40,11 @@ public class AmazonS3Configuration {
     @Bean(name = "awsSecretKey")
     public String getAWSSecretKey() {
         return awsSecretKey;
+    }
+
+    @Bean(name = "awsS3GalleryPath")
+    public String getAWSS3GalleryPath() {
+        return awsS3GalleryPath;
     }
 
     @Bean(name = "awsRegion")
@@ -49,7 +57,7 @@ public class AmazonS3Configuration {
 
     @Bean(name = "awsCredentialsProvider")
     public AWSCredentialsProvider getAWSCredentials() {
-        BasicSessionCredentials awsSessionCredentials = new BasicSessionCredentials(this.awsAccessKey,this.awsAccessKey,this.awsSessionToken);
+        BasicSessionCredentials awsSessionCredentials = new BasicSessionCredentials(this.awsAccessKey,this.awsSecretKey,this.awsSessionToken);
         return new AWSStaticCredentialsProvider(awsSessionCredentials);
     }
 

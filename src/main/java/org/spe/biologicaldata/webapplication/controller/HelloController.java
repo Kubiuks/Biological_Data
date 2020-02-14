@@ -53,7 +53,7 @@ public class HelloController {
             return "error";
         }
         databaseController.storeImage(new Image(), imageFile);
-        return upload(model);
+        return "upload";
     }
 
     @RequestMapping("/gallery")
