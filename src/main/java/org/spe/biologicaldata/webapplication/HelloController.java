@@ -31,26 +31,16 @@ public class HelloController {
         return "index";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String table(HttpServletRequest request, Model model) {
 
-        String number = request.getParameter("number");
-
-        if (number == null || number == "") {
-            number = "0";
-        }
-
-        List<Integer> numbers = new ArrayList<>();
-        for(int n = 0; n < Integer.parseInt(number); n++) {
-            numbers.add(n+1);
-        }
-
-
-        model.addAttribute("numbers", numbers);
-        model.addAttribute("numberOfRows", number);
-        return "table";
+    @RequestMapping(value = "/home")
+    public  String home() {
+        return "home";
     }
 
+    @RequestMapping(value = "/home2")
+    public  String home2() {
+        return "home2";
+    }
 
     @RequestMapping(value = "/extractText")
     public  String extractText() {
@@ -61,18 +51,27 @@ public class HelloController {
     public  String extractInfo() {
         return "extractInfo";
     }
-    @GetMapping("/upload")
-    public String upload(Model model) {
-        return "upload";
-    }
 
-    @PostMapping("/upload")
+
+    @GetMapping("/gallery")
+    public String upload(Model model) {
+        List<Image> images = databaseController.getImages();
+        model.addAttribute("images",images);
+        return "gallery"; }
+
+    @PostMapping("/gallery")
     public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
         if(!Objects.requireNonNull(imageFile.getContentType()).split("/")[0].equals("image")) {
             return "error";
         }
         databaseController.storeImage(new Image(), imageFile);
-        return upload(model);
+        return gallery(model);
+    }
+
+    // For now only returns home
+    @PostMapping("/")
+    public String login(){
+        return "home";
     }
 
     @RequestMapping("/gallery")
@@ -81,5 +80,6 @@ public class HelloController {
         model.addAttribute("images",images);
         return "gallery";
     }
+
 
 }
