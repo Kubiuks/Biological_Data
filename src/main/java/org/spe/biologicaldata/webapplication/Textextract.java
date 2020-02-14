@@ -59,11 +59,12 @@ public class Textextract implements TextExtractController{
     for (AnnotateImageResponse res : responses) {
       if (res.hasError()) {
         out.printf("Error: %s\n", res.getError().getMessage());
-        return;
+        
       }
       for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-		out.printf("Text: %s\n", annotation.getDescription());		
-        //out.printf("Position : %s\n", annotation.getBoundingPoly());
+    //out.printf("Text: %s\n", annotation.getDescription());		
+    return annotation.getDescription();
+        
       }
     }
   }
