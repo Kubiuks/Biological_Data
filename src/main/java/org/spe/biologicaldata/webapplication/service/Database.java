@@ -1,4 +1,4 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.service;
 
 import org.spe.biologicaldata.webapplication.model.Image;
 import org.spe.biologicaldata.webapplication.repository.ImageRepository;
@@ -42,14 +42,14 @@ public class Database implements DatabaseController {
 
     @Override
     public void storeImage(Image imageInfo, MultipartFile image) {
-        String pathUrl = storageService.store(image, true);
+        String pathUrl = storageService.store(image, false);
         imageInfo.setImageUrl(pathUrl);
         imageRepository.save(imageInfo);
     }
 
     @Override
     public void storeImage(MultipartFile image) {
-        String pathUrl = storageService.store(image, true);
+        String pathUrl = storageService.store(image, false);
         Image imageRow = new Image(pathUrl, image.getName(), "", "", "", "");
         imageRepository.save(imageRow);
     }
@@ -57,7 +57,7 @@ public class Database implements DatabaseController {
     @Override
     public void storeImage(String title, String author, String writtenDate,
                            String page, String description, MultipartFile image) {
-        String pathUrl = storageService.store(image, true);
+        String pathUrl = storageService.store(image, false);
         Image imageRow = new Image(pathUrl, title, author, writtenDate, page, description);
         imageRepository.save(imageRow);
     }

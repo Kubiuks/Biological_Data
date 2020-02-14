@@ -1,4 +1,4 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.scheduling.annotation.Async;

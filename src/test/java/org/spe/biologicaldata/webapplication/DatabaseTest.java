@@ -2,6 +2,7 @@ package org.spe.biologicaldata.webapplication;
 
 import org.junit.jupiter.api.Test;
 import org.spe.biologicaldata.webapplication.model.Image;
+import org.spe.biologicaldata.webapplication.service.DatabaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;

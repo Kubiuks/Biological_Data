@@ -1,5 +1,6 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.configuration;
 
+import com.amazonaws.auth.BasicSessionCredentials;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,9 @@ public class AmazonS3Configuration {
     @Value("${aws.S3.bucketName}")
     private String awsS3BucketName;
 
+    @Value(("${aws.session.token}"))
+    private String awsSessionToken;
+
     @Bean(name = "awsAccessKey")
     public String getAWSAccessKey() {
         return awsAccessKey;
@@ -40,10 +44,13 @@ public class AmazonS3Configuration {
         return Region.getRegion(Regions.fromName(awsRegion));
     }
 
+    @Bean(name = "awsSessionToken")
+    public String getAwsSessionToken(){return awsSessionToken;}
+
     @Bean(name = "awsCredentialsProvider")
     public AWSCredentialsProvider getAWSCredentials() {
-        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(this.awsAccessKey, this.awsSecretKey);
-        return new AWSStaticCredentialsProvider(awsCredentials);
+        BasicSessionCredentials awsSessionCredentials = new BasicSessionCredentials(this.awsAccessKey,this.awsAccessKey,this.awsSessionToken);
+        return new AWSStaticCredentialsProvider(awsSessionCredentials);
     }
 
     @Bean(name = "awsS3BucketName")

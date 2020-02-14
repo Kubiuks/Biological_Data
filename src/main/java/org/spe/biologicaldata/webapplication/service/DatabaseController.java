@@ -1,4 +1,4 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.service;
 
 import org.spe.biologicaldata.webapplication.model.Image;
 import org.springframework.web.multipart.MultipartFile;

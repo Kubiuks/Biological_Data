@@ -1,6 +1,7 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.controller;
 
 import org.spe.biologicaldata.webapplication.model.Image;
+import org.spe.biologicaldata.webapplication.service.DatabaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,27 +32,6 @@ public class HelloController {
         return "index";
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String table(HttpServletRequest request, Model model) {
-
-        String number = request.getParameter("number");
-
-        if (number == null || number == "") {
-            number = "0";
-        }
-
-        List<Integer> numbers = new ArrayList<>();
-        for(int n = 0; n < Integer.parseInt(number); n++) {
-            numbers.add(n+1);
-        }
-
-
-        model.addAttribute("numbers", numbers);
-        model.addAttribute("numberOfRows", number);
-        return "table";
-    }
-
-
     @RequestMapping(value = "/extractText")
     public  String extractText() {
         return "extractText";
@@ -61,6 +41,7 @@ public class HelloController {
     public  String extractInfo() {
         return "extractInfo";
     }
+
     @GetMapping("/upload")
     public String upload(Model model) {
         return "upload";

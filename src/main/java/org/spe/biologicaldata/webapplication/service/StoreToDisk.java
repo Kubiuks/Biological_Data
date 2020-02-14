@@ -1,8 +1,6 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.service;
 
 import net.bytebuddy.utility.RandomString;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,9 +12,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
-//@Configuration
 @Service
 public class StoreToDisk implements StorageService {
 
