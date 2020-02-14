@@ -2,9 +2,6 @@ package org.spe.biologicaldata.webapplication;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.spe.biologicaldata.webapplication.Textextract;
-import static org.junit.jupiter.api.Assumptions.*;
-
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
@@ -18,7 +15,6 @@ import com.google.cloud.vision.v1.Image;
 import com.google.cloud.vision.v1.ImageAnnotatorClient;
 import com.google.cloud.vision.v1.ImageAnnotatorSettings;
 import com.google.protobuf.ByteString;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
