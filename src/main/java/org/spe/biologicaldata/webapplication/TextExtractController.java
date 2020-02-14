@@ -23,5 +23,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TextExtractController{
-    String getText(String filePath);
+    String getText(String filePath) throws IOException;
 }

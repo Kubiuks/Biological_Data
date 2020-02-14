@@ -27,48 +27,43 @@ import java.util.List;
 public class Textextract implements TextExtractController{
 
 
-  String getText(String filePath) throws Exception, IOException {
-		Credentials myCredentials = ServiceAccountCredentials.fromStream(
-			new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
-		
-		ImageAnnotatorSettings imageAnnotatorSettings =
-			ImageAnnotatorSettings.newBuilder()
-			.setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
-			.build();
+  public String getText(String filePath) throws IOException {
+    Credentials myCredentials = ServiceAccountCredentials
+        .fromStream(new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
 
+    ImageAnnotatorSettings imageAnnotatorSettings = ImageAnnotatorSettings.newBuilder()
+        .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials)).build();
 
+    PrintStream out = System.out;
 
+    // String filePath="src/main/resources/static/images/test.jpg";
+    List<AnnotateImageRequest> requests = new ArrayList<>();
 
-    PrintStream out=System.out;
-    
-		//String filePath="src/main/resources/static/images/test.jpg";
-  List<AnnotateImageRequest> requests = new ArrayList<>();
+    ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+String returnvalue="";
+    Image img = Image.newBuilder().setContent(imgBytes).build();
+    Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
+    AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+    requests.add(request);
 
-  ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+    try (ImageAnnotatorClient client = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
+      BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+      List<AnnotateImageResponse> responses = response.getResponsesList();
 
-  Image img = Image.newBuilder().setContent(imgBytes).build();
-  Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
-  AnnotateImageRequest request =
-      AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-  requests.add(request);
+      for (AnnotateImageResponse res : responses) {
+        if (res.hasError()) {
+          out.printf("Error: %s\n", res.getError().getMessage());
 
-  try (ImageAnnotatorClient client = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
-    BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
-    List<AnnotateImageResponse> responses = response.getResponsesList();
+        }
+        for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+          // out.printf("Text: %s\n", annotation.getDescription());
+          returnvalue=returnvalue+annotation.getDescription();
 
-    for (AnnotateImageResponse res : responses) {
-      if (res.hasError()) {
-        out.printf("Error: %s\n", res.getError().getMessage());
-        
-      }
-      for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-    //out.printf("Text: %s\n", annotation.getDescription());		
-    return annotation.getDescription();
-        
+        }
       }
     }
+    return returnvalue;
   }
-}
 
 
 
