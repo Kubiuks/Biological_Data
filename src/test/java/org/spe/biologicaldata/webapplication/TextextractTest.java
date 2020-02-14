@@ -46,7 +46,7 @@ class TextextractTest{
 			try (ImageAnnotatorClient vision = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
 
 				// The path to the image file to annotate
-				String fileName = "src/main/resources/static/images/test.jpg";
+				String fileName = "src/main/resources/static/test/test.jpg";
 		  
 				// Reads the image file into memory
 				Path path = Paths.get(fileName);
@@ -97,7 +97,7 @@ class TextextractTest{
 
 
 		PrintStream out=System.out;
-		String filePath="src/main/resources/static/images/test.jpg";
+		String filePath="src/main/resources/static/test/test.jpg";
   List<AnnotateImageRequest> requests = new ArrayList<>();
 
   ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
