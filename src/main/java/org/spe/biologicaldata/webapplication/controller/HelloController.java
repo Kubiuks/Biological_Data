@@ -32,6 +32,16 @@ public class HelloController {
         return "index";
     }
 
+    @RequestMapping(value = "/home")
+    public  String home() {
+        return "home";
+    }
+
+    @RequestMapping(value = "/home2")
+    public  String home2() {
+        return "home2";
+    }
+
     @RequestMapping(value = "/extractText")
     public  String extractText() {
         return "extractText";
@@ -42,18 +52,25 @@ public class HelloController {
         return "extractInfo";
     }
 
-    @GetMapping("/upload")
+    @GetMapping("/gallery")
     public String upload(Model model) {
-        return "upload";
-    }
+        List<Image> images = databaseController.getImages();
+        model.addAttribute("images",images);
+        return "gallery"; }
 
-    @PostMapping("/upload")
+    @PostMapping("/gallery")
     public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
         if(!Objects.requireNonNull(imageFile.getContentType()).split("/")[0].equals("image")) {
             return "error";
         }
         databaseController.storeImage(new Image(), imageFile);
-        return "upload";
+        return gallery(model);
+    }
+
+    // For now only returns home
+    @PostMapping("/")
+    public String login(){
+        return "home";
     }
 
     @RequestMapping("/gallery")
@@ -62,5 +79,6 @@ public class HelloController {
         model.addAttribute("images",images);
         return "gallery";
     }
+
 
 }
