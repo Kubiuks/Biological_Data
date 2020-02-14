@@ -1,6 +1,7 @@
 package org.spe.biologicaldata.webapplication;
 
 import net.bytebuddy.utility.RandomString;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,13 +16,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+//@Configuration
 @Service
 public class StoreToDisk implements StorageService {
 
     String folderPath = "src/main/resources/static/images/";
 
     @Override
-    public String store(MultipartFile file) {
+    public String store(MultipartFile file, Boolean enablePublicReadAccess) {
         String pathUrl = folderPath + RandomString.make(10) + "." + Objects.requireNonNull(file.getContentType()).split("/")[1];
         try {
             byte[] bytes = file.getBytes();

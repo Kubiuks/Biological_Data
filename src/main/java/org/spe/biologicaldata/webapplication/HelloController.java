@@ -1,5 +1,6 @@
 package org.spe.biologicaldata.webapplication;
 
+import org.spe.biologicaldata.webapplication.model.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,7 @@ public class HelloController {
         this.databaseController = databaseController;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "index"}, method = RequestMethod.GET)
     public  String index() {
         return "index";
     }
