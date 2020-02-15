@@ -1,6 +1,7 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.controller;
 
 import org.spe.biologicaldata.webapplication.model.Image;
+import org.spe.biologicaldata.webapplication.service.DatabaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,6 @@ public class HelloController {
         return "index";
     }
 
-
     @RequestMapping(value = "/home")
     public  String home() {
         return "home";
@@ -51,7 +51,6 @@ public class HelloController {
     public  String extractInfo() {
         return "extractInfo";
     }
-
 
     @GetMapping("/gallery")
     public String upload(Model model) {
