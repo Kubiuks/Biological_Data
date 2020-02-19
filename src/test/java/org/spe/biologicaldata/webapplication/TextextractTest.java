@@ -125,10 +125,10 @@ class TextextractTest{
       }
 	  out.printf(res.getTextAnnotationsList().get(0).getDescription());
       // For full list of available annotations, see http://g.co/cloud/vision/docs
-      /*for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+      for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
         out.printf("Text: %s\n", annotation.getDescription());
         out.printf("Position : %s\n", annotation.getBoundingPoly());
-      }*/
+      }
     }
   }
 }
