@@ -27,6 +27,12 @@ import java.util.List;
 class TextextractTest{
 
 	@Test
+	void ectracttextfromjson() throws IOException{
+		String string=Textextract.getText("src/main/resources/static/images/test.jpg");
+		System.out.println(string);
+	  }
+
+	@Test
 	void testimagecontents() throws Exception{
 
 
@@ -83,8 +89,8 @@ class TextextractTest{
 
 
 
-			@Test
-	void getText() throws Exception, IOException {
+	@Test
+	void getTexttest() throws Exception, IOException {
 		Credentials myCredentials = ServiceAccountCredentials.fromStream(
 			new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
 		
@@ -117,12 +123,12 @@ class TextextractTest{
         out.printf("Error: %s\n", res.getError().getMessage());
         return;
       }
-
+	  out.printf(res.getTextAnnotationsList().get(0).getDescription());
       // For full list of available annotations, see http://g.co/cloud/vision/docs
-      for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+      /*for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
         out.printf("Text: %s\n", annotation.getDescription());
         out.printf("Position : %s\n", annotation.getBoundingPoly());
-      }
+      }*/
     }
   }
 }

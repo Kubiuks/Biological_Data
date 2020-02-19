@@ -24,4 +24,7 @@ import java.util.List;
 
 public interface TextExtractController{
     String getText(String filePath) throws IOException;
+    String getTextJson(String filePath) throws IOException;
+    
 }
+
