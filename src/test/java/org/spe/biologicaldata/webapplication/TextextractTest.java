@@ -28,7 +28,7 @@ class TextextractTest{
 
 	@Test
 	void ectracttextfromjson() throws IOException{
-		String string=Textextract.getText("src/main/resources/static/images/test.jpg");
+		String string=Textextract.getText("src/main/resources/static/test/test.jpg");
 		System.out.println(string);
 	  }
 
