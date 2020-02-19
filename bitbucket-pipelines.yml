@@ -12,4 +12,4 @@ pipelines:
           - maven
         script: # Modify the commands below to build your repository.
           - echo $REPOCREDENTIALS > src/main/resources/textract-15059e3faf5f.json
-          - mvn clean test # -B batch mode makes Maven less verbose
+          - mvn test # -B batch mode makes Maven less verbose
