@@ -1,4 +1,4 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

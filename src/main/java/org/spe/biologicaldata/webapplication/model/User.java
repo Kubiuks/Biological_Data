@@ -18,7 +18,7 @@ public class User {
     @Column(name = "password") @Getter @Setter
     private String password;
 
-    @Transient @Column(name = "passwordConfirm") @Getter @Setter
+    @Transient @Getter @Setter
     private String passwordConfirm;
 
     @ManyToMany @Getter @Setter

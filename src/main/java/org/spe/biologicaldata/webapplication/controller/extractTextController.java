@@ -1,6 +1,7 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.controller;
 
 import com.google.api.client.json.Json;
+import org.spe.biologicaldata.webapplication.Textextract;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

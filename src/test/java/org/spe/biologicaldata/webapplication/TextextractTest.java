@@ -27,6 +27,12 @@ import java.util.List;
 class TextextractTest{
 
 	@Test
+	void ectracttextfromjson() throws IOException{
+		String string=Textextract.getText("src/main/resources/static/test/test.jpg");
+		System.out.println(string);
+	  }
+
+	@Test
 	void testimagecontents() throws Exception{
 
 
@@ -46,7 +52,7 @@ class TextextractTest{
 			try (ImageAnnotatorClient vision = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
 
 				// The path to the image file to annotate
-				String fileName = "src/main/resources/static/images/test.jpg";
+				String fileName = "src/main/resources/static/test/test.jpg";
 		  
 				// Reads the image file into memory
 				Path path = Paths.get(fileName);
@@ -83,8 +89,8 @@ class TextextractTest{
 
 
 
-			@Test
-	void getText() throws Exception, IOException {
+	@Test
+	void getTexttest() throws Exception, IOException {
 		Credentials myCredentials = ServiceAccountCredentials.fromStream(
 			new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
 		
@@ -97,7 +103,7 @@ class TextextractTest{
 
 
 		PrintStream out=System.out;
-		String filePath="src/main/resources/static/images/test.jpg";
+		String filePath="src/main/resources/static/test/test.jpg";
   List<AnnotateImageRequest> requests = new ArrayList<>();
 
   ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
@@ -117,7 +123,7 @@ class TextextractTest{
         out.printf("Error: %s\n", res.getError().getMessage());
         return;
       }
-
+	  out.printf(res.getTextAnnotationsList().get(0).getDescription());
       // For full list of available annotations, see http://g.co/cloud/vision/docs
       for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
         out.printf("Text: %s\n", annotation.getDescription());

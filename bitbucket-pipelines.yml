@@ -11,4 +11,5 @@ pipelines:
         caches:
           - maven
         script: # Modify the commands below to build your repository.
-          - mvn clean test # -B batch mode makes Maven less verbose
+          - echo $REPOCREDENTIALS > src/main/resources/textract-15059e3faf5f.json
+          - mvn test # -B batch mode makes Maven less verbose

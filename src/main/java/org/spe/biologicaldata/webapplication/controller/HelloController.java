@@ -1,6 +1,7 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.controller;
 
 import org.spe.biologicaldata.webapplication.model.Image;
+import org.spe.biologicaldata.webapplication.service.DatabaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,6 @@ import java.util.logging.Logger;
 public class HelloController {
 
     private final DatabaseController databaseController;
-    private final Textextract textextract = new Textextract();
 
     @Autowired
     public HelloController(DatabaseController databaseController) {

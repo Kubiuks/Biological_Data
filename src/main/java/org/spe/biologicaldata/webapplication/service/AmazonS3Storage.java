@@ -1,4 +1,4 @@
-package org.spe.biologicaldata.webapplication;
+package org.spe.biologicaldata.webapplication.service;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -7,7 +7,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
@@ -29,29 +28,32 @@ public class AmazonS3Storage implements StorageService {
     private AmazonS3 amazonS3;
     private static final Logger logger = LoggerFactory.getLogger(AmazonS3Storage.class);
     String folderPath = "src/main/resources/static/images/";
+    String awsS3GalleryPath;
 
     @Autowired
-    public AmazonS3Storage(Region awsRegion, AWSCredentialsProvider awsCredentialsProvider, String awsS3BucketName)
+    public AmazonS3Storage(Region awsRegion, AWSCredentialsProvider awsCredentialsProvider,
+                            String awsS3BucketName, String awsS3GalleryPath)
     {
         this.amazonS3 = AmazonS3ClientBuilder.standard()
                 .withCredentials(awsCredentialsProvider)
                 .withRegion(awsRegion.getName()).build();
         this.awsS3BucketName = awsS3BucketName;
+        this.awsS3GalleryPath = awsS3GalleryPath;
     }
 
-    @Override  //TODO Make it @Async
+    @Override //TODO maybe make it async
     public String store(MultipartFile file, Boolean enablePublicReadAccess) {
 
-        String fileName = RandomString.make(10) + "." + Objects.requireNonNull(file.getContentType()).split("/")[1];
-
+        String fileName =  RandomString.make(10) + "." + Objects.requireNonNull(file.getContentType()).split("/")[1];
+        String awsFilePath = awsS3GalleryPath + fileName;
         try {
             //Temporarily creating the file in the server
-            File newFile = new File(fileName);
+            File newFile = new File(folderPath + fileName);
             FileOutputStream fos = new FileOutputStream(newFile);
             fos.write(file.getBytes());
             fos.close();
 
-            PutObjectRequest putObjectRequest = new PutObjectRequest(this.awsS3BucketName, fileName, newFile);
+            PutObjectRequest putObjectRequest = new PutObjectRequest(this.awsS3BucketName, awsFilePath, newFile);
 
             if (enablePublicReadAccess) {
                 putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
@@ -67,8 +69,7 @@ public class AmazonS3Storage implements StorageService {
             logger.error("error [" + ex.getMessage() + "] occurred while uploading [" + fileName + "] ");
         }
 
-        amazonS3.getObject(new GetObjectRequest(awsS3BucketName, fileName)).getKey();
-        return "https://" + amazonS3.getRegionName() + ".amazonaws.com/" + awsS3BucketName + "/" + fileName;
+        return "https://" + awsS3BucketName + ".s3.amazonaws.com/" + awsFilePath;
     }
 
     @Override   @Async
