@@ -34,12 +34,14 @@
 </div>
 
 <div class="center">
-
-    <form action="/gallery" method="post" enctype="multipart/form-data">
+    <form action="/extractText" method="post">
         <input type="file" name="imageFile">
-        <input type="submit" value="Upload Image">
+        <input type="submit">
     </form>
+</div>
 
+<div class="center">
+    <h3>${extracted_text}</h3>
 </div>
 
 </html>

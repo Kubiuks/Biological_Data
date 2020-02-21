@@ -12,21 +12,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @Controller
 public class HelloController {
 
     private final DatabaseController databaseController;
+    private final Textextract textextract = new Textextract();
 
     @Autowired
     public HelloController(DatabaseController databaseController) {
         this.databaseController = databaseController;
     }
 
-    @RequestMapping(value = {"/", "index"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/", "index"})
     public  String index() {
         return "index";
     }
@@ -42,19 +45,9 @@ public class HelloController {
         return "home2";
     }
 
-    @RequestMapping(value = "/extractText")
-    public  String extractText() {
-        return "extractText";
-    }
-
-    @RequestMapping(value = "/extractInfo")
-    public  String extractInfo() {
-        return "extractInfo";
-    }
-
 
     @GetMapping("/gallery")
-    public String upload(Model model) {
+    public String gallery(Model model) {
         List<Image> images = databaseController.getImages();
         model.addAttribute("images",images);
         return "gallery"; }
@@ -71,15 +64,9 @@ public class HelloController {
     // For now only returns home
     @PostMapping("/")
     public String login(){
-        return "home";
+        return "redirect:/home";
     }
 
-    @RequestMapping("/gallery")
-    public String gallery(Model model) {
-        List<Image> images = databaseController.getImages();
-        model.addAttribute("images",images);
-        return "gallery";
-    }
 
 
 }

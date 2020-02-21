@@ -26,6 +26,7 @@ target/
 *.ipr
 *.JPG
 *.jpg
+*.jpeg
 
 ### NetBeans ###
 /nbproject/private/

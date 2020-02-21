@@ -1,4 +1,3 @@
-
 package org.spe.biologicaldata.webapplication;
 // Imports the Google Cloud client library
 
@@ -24,50 +23,48 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Textextract implements TextExtractController{
+public class Textextract{
 
-
-  public String getText(String filePath) throws IOException {
-    Credentials myCredentials = ServiceAccountCredentials
-        .fromStream(new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
-
-    ImageAnnotatorSettings imageAnnotatorSettings = ImageAnnotatorSettings.newBuilder()
-        .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials)).build();
-
-    PrintStream out = System.out;
-
-    // String filePath="src/main/resources/static/images/test.jpg";
-    List<AnnotateImageRequest> requests = new ArrayList<>();
-
-    ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
-String returnvalue="";
-    Image img = Image.newBuilder().setContent(imgBytes).build();
-    Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
-    AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-    requests.add(request);
-
-    try (ImageAnnotatorClient client = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
-      BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
-      List<AnnotateImageResponse> responses = response.getResponsesList();
-
-      for (AnnotateImageResponse res : responses) {
-        if (res.hasError()) {
-          out.printf("Error: %s\n", res.getError().getMessage());
-
-        }
-        for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-          // out.printf("Text: %s\n", annotation.getDescription());
-          returnvalue=returnvalue+annotation.getDescription();
-
-        }
-      }
+    public static String getText(String filePath) throws IOException{
+        List<AnnotateImageResponse> responses=getTextresponse(filePath);
+        AnnotateImageResponse res=responses.get(0);
+        return res.getTextAnnotationsList().get(0).getDescription();
     }
-    return returnvalue;
-  }
+
+
+    static List<AnnotateImageResponse> getTextresponse(String filePath) throws IOException {
+        Credentials myCredentials = ServiceAccountCredentials
+                .fromStream(new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
+
+        ImageAnnotatorSettings imageAnnotatorSettings = ImageAnnotatorSettings.newBuilder()
+                .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials)).build();
+
+        PrintStream out = System.out;
+
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
+        AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    out.printf("Error: %s\n", res.getError().getMessage());
+
+                }
+
+
+            }
+            return responses;
+        }
+    }
 
 
 
 }
-
-
-

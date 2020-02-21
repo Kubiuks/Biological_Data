@@ -1,20 +1,16 @@
 <!doctype html>
 
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="stylesheet" href="../css/styles.css">
     <link href="css/sidebar.css" rel="stylesheet"/>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-
+    <script type="text/javascript" src="js/extractText.js"></script>
 </head>
 
 <body>
 
 <div class="main">
-
-<header>
-    <h1 id="elo">Biological Data<br> </h1>
-</header>
 
 <div class="sidebar">
     <h2>Sidebar</h2>
@@ -31,6 +27,29 @@
         <a href="https://twitter.com/bristolmuseum"><i class="fab fa-twitter"></i></a>
         <a href="https://www.instagram.com/bristolmuseums/"><i class="fab fa-instagram"></i></a>
     </div>
+</div>
+
+
+<div class="center">
+    <input id="file" type="file" name="imageFile" />
+    <button id="submit">submit</button>
+    <script>
+        const button = document.getElementById('submit');
+        button.addEventListener('click', async event => {
+            const data = document.getElementById("file").files[0].name;
+            await sendHttpRequest('POST', '/extractText', data)
+                .then(responseData => {
+                    document.getElementById('textArea').value = responseData;
+                })
+                .catch(err =>{
+                    console.log(err);
+                });
+        });
+    </script>
+</div>
+
+<div class="center">
+    <textarea id="textArea" placeholder="Extracted text will appear here!" cols="50" rows="30"></textarea>
 </div>
 </div>
 
