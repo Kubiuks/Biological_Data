@@ -55,6 +55,7 @@ public class HelloController {
     @PostMapping("/gallery")
     public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
         if(!Objects.requireNonNull(imageFile.getContentType()).split("/")[0].equals("image")) {
+            //TODO change to a an error message instead
             return "error";
         }
         databaseController.storeImage(new Image(), imageFile);
