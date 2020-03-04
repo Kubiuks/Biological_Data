@@ -37,36 +37,38 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                //Html pages that all users can access
-                .antMatchers("/**").permitAll()
-                //Everything else can be access by authenticated users
-                .anyRequest().authenticated()
+                //Html pages authenticated users can access
+//                .antMatchers("/extractText").authenticated()
+                //All the other pages can be accessed by everyone
+                .anyRequest().permitAll()
                 .and()
             .formLogin()
                 //The Html page for login
                 .loginPage("/login")
                 .permitAll()
                 //The POST address for a login request
-                //TODO make the Controller
                 .loginProcessingUrl("/login")
                 //Redirect after successful login
                 //If alwaysUse is set to false then the user will be redirected
                 //to the previous page they wanted to visit before being prompted to authenticate.
                 .defaultSuccessUrl("/index",false)
-                .failureUrl("/login?error=true")
+                .failureUrl("/login?error")
                 .and()
             .logout()
+                //POST url for logout request
+                .logoutUrl("/logout")
+                //Redirect after successful logout
+                .logoutSuccessUrl("/login?logout")
                 .permitAll()
+                .deleteCookies("JSESSIONID")
                 .and()
-            //Disable csrf and use cors instead
-            .cors()
-                .and()
-            .csrf()
-                .disable();
+            //Enable CORS
+            .cors();
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+        //TODO have look at what this does
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("*"));
