@@ -1,10 +1,7 @@
 package org.spe.biologicaldata.webapplication.controller;
 
-import com.google.api.client.json.Json;
 import org.spe.biologicaldata.webapplication.Textextract;
-import org.spe.biologicaldata.webapplication.wrapper.TextExtracted;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.spe.biologicaldata.webapplication.wrapper.StringWrapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,10 +21,10 @@ public class ExtractTextController {
     }
 
     @PostMapping(value = "/extractText", consumes = "application/json", produces = "application/json")
-    public TextExtracted extractText(@RequestBody String imageFile) throws IOException {
-        String extracted_text = textextract.getText("src/main/resources/static/images/" + imageFile);
-        TextExtracted response = new TextExtracted();
-        response.setExtractedText(extracted_text);
+    public StringWrapper extractText(@RequestBody StringWrapper imageFile) throws IOException {
+        String extracted_text = textextract.getText("src/main/resources/static/images/" + imageFile.getValue());
+        StringWrapper response = new StringWrapper();
+        response.setValue(extracted_text);
         return response;
     }
 

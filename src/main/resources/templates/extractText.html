@@ -38,10 +38,13 @@
     <script>
         const button = document.getElementById('submit');
         button.addEventListener('click', async event => {
-            const data = document.getElementById("file").files[0].name;
-            await sendHttpRequest('POST', '/extractText', data)
+            const imageFile =
+                {
+                   value : document.getElementById("file").files[0].name
+                };
+            await sendHttpRequest('POST', '/extractText', imageFile)
                 .then(responseData => {
-                    document.getElementById('textArea').value = JSON.parse(responseData)["extractedText"];
+                    document.getElementById('textArea').value = JSON.parse(responseData)["value"];
                 })
                 .catch(err =>{
                     console.log(err);

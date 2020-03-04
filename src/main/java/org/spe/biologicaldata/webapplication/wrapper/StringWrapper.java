@@ -3,7 +3,7 @@ package org.spe.biologicaldata.webapplication.wrapper;
 import lombok.Getter;
 import lombok.Setter;
 
-public class TextExtracted {
+public class StringWrapper {
     @Getter @Setter
-    private String extractedText;
+    private String value;
 }
