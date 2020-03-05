@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.*;
 
 @Service
-public class Database implements DatabaseController {
+public class Database implements DatabaseService {
 
     private StorageService storageService;
     private ImageRepository imageRepository;
@@ -41,25 +41,37 @@ public class Database implements DatabaseController {
     }
 
     @Override
-    public void storeImage(Image imageInfo, MultipartFile image) {
-        String pathUrl = storageService.store(image, true);
-        imageInfo.setImageUrl(pathUrl);
-        imageRepository.save(imageInfo);
+    public Boolean storeImage(Image imageInfo, MultipartFile image) {
+        Optional<String> pathUrl = storageService.store(image, true);
+        if(pathUrl.isPresent()) {
+            imageInfo.setImageUrl(pathUrl.get());
+            imageRepository.save(imageInfo);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void storeImage(MultipartFile image) {
-        String pathUrl = storageService.store(image, true);
-        Image imageRow = new Image(pathUrl, image.getName(), "", "", "", "");
-        imageRepository.save(imageRow);
+    public Boolean storeImage(MultipartFile image) {
+        Optional<String> pathUrl = storageService.store(image, true);
+        if(pathUrl.isPresent()) {
+            Image imageRow = new Image(pathUrl.get(), image.getName(), "", "", "", "");
+            imageRepository.save(imageRow);
+            return  true;
+        }
+        return false;
     }
 
     @Override
-    public void storeImage(String title, String author, String writtenDate,
-                           String page, String description, MultipartFile image) {
-        String pathUrl = storageService.store(image, true);
-        Image imageRow = new Image(pathUrl, title, author, writtenDate, page, description);
-        imageRepository.save(imageRow);
+    public Boolean storeImage(String title, String author, String writtenDate,
+                              String page, String description, MultipartFile image) {
+        Optional<String> pathUrl = storageService.store(image, true);
+        if(pathUrl.isPresent()){
+            Image imageRow = new Image(pathUrl.get(), title, author, writtenDate, page, description);
+            imageRepository.save(imageRow);
+            return true;
+        }
+     return false;
     }
 
     @Override
@@ -73,25 +85,30 @@ public class Database implements DatabaseController {
     }
 
     @Override
-    public void deleteImageById(Long id) {
+    public Boolean deleteImageById(Long id) {
         Optional<Image> image= imageRepository.findById(id);
         if(image.isPresent()) {
             storageService.delete(image.get().getImageUrl());
             imageRepository.deleteById(id);
+            return true;
         }
+        return false;
     }
 
     @Override
-    public void deleteImage(Image image) {
-        storageService.delete(image.getImageUrl());
-        imageRepository.delete(image);
+    public Boolean deleteImage(Image image) {
+        if(!storageService.delete(image.getImageUrl()))
+            return false;
+        if(imageRepository.existsById(image.getId())) {
+            imageRepository.delete(image);
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public void deleteAll() {
-        List<Image> images = new ArrayList<>((Collection<Image>) imageRepository.findAll());
-        for(Image image : images) {
-            deleteImage(image);
-        }
+    public Boolean deleteAll() {
+        imageRepository.deleteAll();
+        return true;
     }
 }

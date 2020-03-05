@@ -12,14 +12,13 @@ import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 //@Service
 public class AmazonS3Storage implements StorageService {
@@ -42,11 +41,11 @@ public class AmazonS3Storage implements StorageService {
     }
 
     @Override //TODO maybe make it async
-    public String store(MultipartFile file, Boolean enablePublicReadAccess) {
-
-        String fileName =  RandomString.make(10) + "." + Objects.requireNonNull(file.getContentType()).split("/")[1];
-        String awsFilePath = awsS3GalleryPath + fileName;
+    public Optional<String> store(MultipartFile file, Boolean enablePublicReadAccess) {
         try {
+            String fileName =  RandomString.make(10) + "." + Objects.requireNonNull(file.getContentType()).split("/")[1];
+            String awsFilePath = awsS3GalleryPath + fileName;
+
             //Temporarily creating the file in the server
             File newFile = new File(folderPath + fileName);
             FileOutputStream fos = new FileOutputStream(newFile);
@@ -65,25 +64,33 @@ public class AmazonS3Storage implements StorageService {
                 logger.error("error deleting file with name [" + fileName + "] created from uploaded file [" +
                                 file.getOriginalFilename());
             }
+            return Optional.of("https://" + awsS3BucketName + ".s3.amazonaws.com/" + awsFilePath);
         } catch (IOException | AmazonServiceException ex) {
-            logger.error("error [" + ex.getMessage() + "] occurred while uploading [" + fileName + "] ");
+            logger.error("error [" + ex.getMessage() + "] occurred while uploading [" + file.getName() + "] ");
+            return Optional.empty();
         }
-
-        return "https://" + awsS3BucketName + ".s3.amazonaws.com/" + awsFilePath;
     }
 
-    @Override   @Async
-    public void delete(String path) {
+    @Override
+    public Boolean delete(String path) {
         String fileName = path.substring(path.lastIndexOf("/") + 1);
         try {
             amazonS3.deleteObject(new DeleteObjectRequest(awsS3BucketName, fileName));
+            return true;
         } catch (AmazonServiceException ex) {
             logger.error("error [" + ex.getMessage() + "] occurred while removing [" + fileName + "] ");
+            return false;
         }
     }
 
-    @Override   @Async
-    public void deleteAll() {
+    @Override
+    public Boolean deleteAll() {
+        return false;
+    }
+
+    @Override
+    public Optional<byte[]> retrieveFile(String path) {
+        return Optional.empty();
     }
 
 }

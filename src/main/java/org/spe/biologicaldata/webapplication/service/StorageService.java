@@ -4,7 +4,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -18,18 +20,27 @@ public interface StorageService {
          * @param enablePublicReadAccess enables public read access
          * @return a string representing the path to the created file
          */
-        String store(MultipartFile file, Boolean enablePublicReadAccess);
+        Optional<String> store(MultipartFile file, Boolean enablePublicReadAccess);
 
         /**
          * Deletes a file
          * @param path the path to that file
+         * @return true if the process was a success, false otherwise
          */
-        @Async
-        void delete(String path);
+//        @Async
+        Boolean delete(String path);
 
         /**
          * Deletes all files inside the storage
+         * @return true if the process was a success, false otherwise
          */
-        @Async
-        void deleteAll();
+//        @Async
+        Boolean deleteAll();
+
+        /**
+         * Returns a file from the path, it it exist
+         * @return a file, if there is one at the path, or empty otherwise
+         */
+        Optional<byte[]> retrieveFile(String path);
+
 }

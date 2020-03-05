@@ -10,21 +10,23 @@ import java.util.Optional;
  * An interface for a Database Controller, takes care of both storing data in the Database Repository
  * and storing files in the Storage Service. The  Controller interacts with this Interface
  */
-public interface DatabaseController {
+public interface DatabaseService {
 
     /**
      * Stores an image in the Storage Service and its information in the database
      * @param imageInfo an Image object containing the information of the image, apart from the path
      * @param image the image to be stored. its path will be added in imageInfo
+     * @return returns true if the process was a success, false otherwise
      */
-    void storeImage(Image imageInfo, MultipartFile image);
+    Boolean storeImage(Image imageInfo, MultipartFile image);
 
     /**
      * Stores an image in the Storage Service and its path in the database. The rest of the fields in
      * Image will be left empty
      * @param image the image to be stored
+     * @return returns true if the process was a success, false otherwise
      */
-    void storeImage(MultipartFile image);
+    Boolean storeImage(MultipartFile image);
 
     /**
      * Stores an image in the Storage Service and its information in the database
@@ -34,8 +36,9 @@ public interface DatabaseController {
      * @param page the page from where it was taken
      * @param description the description of the image
      * @param image the image to be saved
+     * @return returns true if the process was a success, false otherwise
      */
-    void storeImage(String title, String author, String writtenDate,
+    Boolean storeImage(String title, String author, String writtenDate,
                     String page, String description, MultipartFile image);
 
     /**
@@ -54,18 +57,21 @@ public interface DatabaseController {
     /**
      * Deletes an image from the Storage and the Database given its id
      * @param id the id of the image to be deleted
+     * @return returns true if the process was a success, false otherwise
      */
-    void deleteImageById(Long id);
+    Boolean deleteImageById(Long id);
 
     /**
      * Deletes an image from the Storage and the Database given its
      * object representation in the database
      * @param image the object representing the image in the Database
+     * @return returns true if the process was a success, false otherwise
      */
-    void deleteImage(Image image);
+   Boolean deleteImage(Image image);
 
     /**
      * Deletes all entries in the Database and in the Storage
+     * @return returns true if the process was a success, false otherwise
      */
-    void deleteAll();
+    Boolean deleteAll();
 }

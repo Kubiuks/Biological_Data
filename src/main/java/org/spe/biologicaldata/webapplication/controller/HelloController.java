@@ -1,32 +1,30 @@
 package org.spe.biologicaldata.webapplication.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spe.biologicaldata.webapplication.model.Image;
-import org.spe.biologicaldata.webapplication.service.DatabaseController;
+import org.spe.biologicaldata.webapplication.service.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 @Controller
 public class HelloController {
 
-    private final DatabaseController databaseController;
+    private final DatabaseService databaseService;
+    private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
     @Autowired
-    public HelloController(DatabaseController databaseController) {
-        this.databaseController = databaseController;
+    public HelloController(DatabaseService databaseService) {
+        this.databaseService = databaseService;
     }
 
     @GetMapping(value = {"/", "index"})
@@ -48,18 +46,26 @@ public class HelloController {
 
     @GetMapping("/gallery")
     public String gallery(Model model) {
-        List<Image> images = databaseController.getImages();
+        List<Image> images = databaseService.getImages();
         model.addAttribute("images",images);
         return "gallery"; }
 
     @PostMapping("/gallery")
+    //TODO change to a an error message instead
     public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
-        if(!Objects.requireNonNull(imageFile.getContentType()).split("/")[0].equals("image")) {
-            //TODO change to a an error message instead
+        try {
+            if (!Objects.requireNonNull(imageFile.getContentType()).split("/")[0].equals("image")) {
+                return "error";
+            }
+            if(!databaseService.storeImage(new Image(), imageFile)) {
+                logger.error("[error: could not save file " + imageFile.getName() + "]");
+                return "error";
+            }
+            return gallery(model);
+        } catch (NullPointerException e) {
+            logger.error("[error: " + e + " happened while saving file " + imageFile.getName() + "]");
             return "error";
         }
-        databaseController.storeImage(new Image(), imageFile);
-        return gallery(model);
     }
 
     // For now only returns home
