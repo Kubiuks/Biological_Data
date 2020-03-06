@@ -41,7 +41,8 @@ public class StoreToDisk implements StorageService {
     @Override
     public Boolean delete(String path) {
         try {
-            String fullPath = folderPath + path.substring(path.indexOf("\\"));
+            String fullPath = folderPath + path.substring(path.indexOf("\\") + 1);
+            System.out.println(fullPath);
             Path pathToFile = Paths.get(fullPath);
             Files.delete(pathToFile);
             return true;
