@@ -57,7 +57,7 @@ public class HelloController {
             if (!Objects.requireNonNull(imageFile.getContentType()).split("/")[0].equals("image")) {
                 return "error";
             }
-            if(!databaseService.storeImage(new Image(), imageFile)) {
+            if(!databaseService.storeImage(new Image(), imageFile, true)) {
                 logger.error("[error: could not save file " + imageFile.getName() + "]");
                 return "error";
             }

@@ -3,6 +3,10 @@ package org.spe.biologicaldata.webapplication.service;
 import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spe.biologicaldata.webapplication.configuration.DiskStorageConfiguration;
+import org.spe.biologicaldata.webapplication.wrapper.ImagePathWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,25 +17,30 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@ConditionalOnBean(DiskStorageConfiguration.class)
 public class StoreToDisk implements StorageService {
 
-    String folderPath = "src\\main\\resources\\static\\images\\";
+    String folderPath;
     private static final Logger logger = LoggerFactory.getLogger(StoreToDisk.class);
 
+    @Autowired
+    public StoreToDisk(String diskStorageFolderPath){
+        this.folderPath = diskStorageFolderPath;
+    }
+
     @Override
-    public Optional<String> store(MultipartFile file, Boolean enablePublicReadAccess) {
+    public Optional<ImagePathWrapper> store(MultipartFile file, Boolean enablePublicReadAccess) {
         try {
             String pathUrl = folderPath + RandomString.make(10) + "." + Objects.requireNonNull(file.getContentType()).split("/")[1];
             byte[] bytes = file.getBytes();
             Path path = Paths.get(pathUrl);
             Files.write(path, bytes);
-            return Optional.of(pathUrl.substring(pathUrl.indexOf("images")));
+            String imagePath = pathUrl.substring(pathUrl.indexOf("images"));
+            return Optional.of(new ImagePathWrapper(imagePath, imagePath));
         } catch (IOException | NullPointerException e) {
             logger.error("[error: " + e + " happened while saving file " + file.getName() + "]");
             return Optional.empty();
@@ -52,33 +61,33 @@ public class StoreToDisk implements StorageService {
         }
     }
 
-    @Override
-    public Boolean deleteAll() {
-        try {
-            File folder = new File(folderPath);
-            List<File> files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
-
-            for (File file : files) {
-                if (file.isFile()) {
-                    String path = file.getPath();
-                    try {
-                        Path pathToFile = Paths.get(path);
-                        Files.delete(pathToFile);
-                    } catch (IOException e) {
-                        logger.error("[error: " + e + " happened while deleting file " + path + "]");
-                        return false;
-                    }
-
-                } else if (file.isDirectory()) {
-                    files.addAll(Arrays.asList(Objects.requireNonNull(file.listFiles())));
-                }
-            }
-            return true;
-        } catch(NullPointerException e) {
-            logger.error("[error: " + e + " happened while deleting all files]");
-            return false;
-        }
-    }
+//    @Override
+//    public Boolean deleteAll() {
+//        try {
+//            File folder = new File(folderPath);
+//            List<File> files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
+//
+//            for (File file : files) {
+//                if (file.isFile()) {
+//                    String path = file.getPath();
+//                    try {
+//                        Path pathToFile = Paths.get(path);
+//                        Files.delete(pathToFile);
+//                    } catch (IOException e) {
+//                        logger.error("[error: " + e + " happened while deleting file " + path + "]");
+//                        return false;
+//                    }
+//
+//                } else if (file.isDirectory()) {
+//                    files.addAll(Arrays.asList(Objects.requireNonNull(file.listFiles())));
+//                }
+//            }
+//            return true;
+//        } catch(NullPointerException e) {
+//            logger.error("[error: " + e + " happened while deleting all files]");
+//            return false;
+//        }
+//    }
 
     @Override
     public Optional<byte[]> retrieveFile(String path) {

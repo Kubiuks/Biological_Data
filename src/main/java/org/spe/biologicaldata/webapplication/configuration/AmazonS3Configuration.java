@@ -2,6 +2,7 @@ package org.spe.biologicaldata.webapplication.configuration;
 
 import com.amazonaws.auth.BasicSessionCredentials;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,6 +13,7 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 
 @Configuration
+@ConditionalOnExpression("not ${service.storage.google-storage:true} and ${service.storage.amazon-storage:false}")
 public class AmazonS3Configuration {
 
     @Value("${aws.accessKey}")
@@ -32,6 +34,9 @@ public class AmazonS3Configuration {
     @Value("${aws.S3.galleryPath}")
     private String awsS3GalleryPath;
 
+    @Value("${aws.localTemporaryStorageDirectory}")
+    private String localTemporaryStoragePath;
+
     @Bean(name = "awsAccessKey")
     public String getAWSAccessKey() {
         return awsAccessKey;
@@ -45,6 +50,11 @@ public class AmazonS3Configuration {
     @Bean(name = "awsS3GalleryPath")
     public String getAWSS3GalleryPath() {
         return awsS3GalleryPath;
+    }
+
+    @Bean(name = "localTemporaryStoragePath")
+    public String getLocalTemporaryStoragePath() {
+        return localTemporaryStoragePath;
     }
 
     @Bean(name = "awsRegion")

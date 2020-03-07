@@ -16,17 +16,19 @@ public interface DatabaseService {
      * Stores an image in the Storage Service and its information in the database
      * @param imageInfo an Image object containing the information of the image, apart from the path
      * @param image the image to be stored. its path will be added in imageInfo
+     * @param enablePublicReadAccess enables public read access to the image
      * @return returns true if the process was a success, false otherwise
      */
-    Boolean storeImage(Image imageInfo, MultipartFile image);
+    Boolean storeImage(Image imageInfo, MultipartFile image, Boolean enablePublicReadAccess);
 
     /**
      * Stores an image in the Storage Service and its path in the database. The rest of the fields in
      * Image will be left empty
      * @param image the image to be stored
+     * @param enablePublicReadAccess enables public read access to the image
      * @return returns true if the process was a success, false otherwise
      */
-    Boolean storeImage(MultipartFile image);
+    Boolean storeImage(MultipartFile image, Boolean enablePublicReadAccess);
 
     /**
      * Stores an image in the Storage Service and its information in the database
@@ -36,10 +38,11 @@ public interface DatabaseService {
      * @param page the page from where it was taken
      * @param description the description of the image
      * @param image the image to be saved
+     * @param enablePublicReadAccess enables public read access to the image
      * @return returns true if the process was a success, false otherwise
      */
     Boolean storeImage(String title, String author, String writtenDate,
-                    String page, String description, MultipartFile image);
+                    String page, String description, MultipartFile image, Boolean enablePublicReadAccess);
 
     /**
      * Returns a list of all the images

@@ -22,11 +22,11 @@ class DatabaseServiceTest {
 
     @Test
     void testStoreImageWithTwoArguments(){
-        Image image = new Image("","File1","Auth1","1930-1940","4","Some description");
+        Image image = new Image("","","File1","Auth1","1930-1940","4","Some description");
         MultipartFile file = new MockMultipartFile("File1", "filename1",
                 "image/jpg",new byte[]{4, 6, 100, 127, 34});
 
-        assertTrue(databaseService.storeImage(image,file));
+        assertTrue(databaseService.storeImage(image,file,true));
 
         assertTrue(databaseService.getImageById(image.getId()).isPresent());
         assertFalse(databaseService.getImageById((long) -12).isPresent());

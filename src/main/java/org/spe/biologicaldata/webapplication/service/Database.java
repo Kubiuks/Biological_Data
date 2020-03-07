@@ -2,11 +2,11 @@ package org.spe.biologicaldata.webapplication.service;
 
 import org.spe.biologicaldata.webapplication.model.Image;
 import org.spe.biologicaldata.webapplication.repository.ImageRepository;
+import org.spe.biologicaldata.webapplication.wrapper.ImagePathWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.*;
 
 @Service
@@ -19,32 +19,14 @@ public class Database implements DatabaseService {
     public Database(StorageService storageService, ImageRepository imageRepository) {
         this.storageService = storageService;
         this.imageRepository = imageRepository;
-
-        //Load files from static/images into the in memory database
-        File folder = new File("src/main/resources/static/images");
-        List<File> files;
-        try{
-            files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
-        } catch(NullPointerException e) {
-            boolean bool = folder.mkdir();
-            files = Arrays.asList(Objects.requireNonNull(folder.listFiles()));
-        }
-
-        for (File file : files) {
-            if (file.isFile()) {
-                String path = file.getPath();
-                imageRepository.save(new Image(path.substring(path.indexOf("images")),file.getName(),"","","",""));
-            } else if (file.isDirectory()) {
-                files.addAll(Arrays.asList(Objects.requireNonNull(file.listFiles())));
-            }
-        }
     }
 
     @Override
-    public Boolean storeImage(Image imageInfo, MultipartFile image) {
-        Optional<String> pathUrl = storageService.store(image, true);
+    public Boolean storeImage(Image imageInfo, MultipartFile image, Boolean enablePublicReadAccess) {
+        Optional<ImagePathWrapper> pathUrl = storageService.store(image, enablePublicReadAccess);
         if(pathUrl.isPresent()) {
-            imageInfo.setImageUrl(pathUrl.get());
+            imageInfo.setImageUrl(pathUrl.get().getLink());
+            imageInfo.setBucketPathId(pathUrl.get().getPathId());
             imageRepository.save(imageInfo);
             return true;
         }
@@ -52,10 +34,11 @@ public class Database implements DatabaseService {
     }
 
     @Override
-    public Boolean storeImage(MultipartFile image) {
-        Optional<String> pathUrl = storageService.store(image, true);
+    public Boolean storeImage(MultipartFile image, Boolean enablePublicReadAccess) {
+        Optional<ImagePathWrapper> pathUrl = storageService.store(image, enablePublicReadAccess);
         if(pathUrl.isPresent()) {
-            Image imageRow = new Image(pathUrl.get(), image.getName(), "", "", "", "");
+            Image imageRow = new Image(pathUrl.get().getLink(), pathUrl.get().getPathId(),
+                    image.getName(), "", "", "", "");
             imageRepository.save(imageRow);
             return  true;
         }
@@ -64,10 +47,11 @@ public class Database implements DatabaseService {
 
     @Override
     public Boolean storeImage(String title, String author, String writtenDate,
-                              String page, String description, MultipartFile image) {
-        Optional<String> pathUrl = storageService.store(image, true);
+                              String page, String description, MultipartFile image, Boolean enablePublicReadAccess) {
+        Optional<ImagePathWrapper> pathUrl = storageService.store(image, enablePublicReadAccess);
         if(pathUrl.isPresent()){
-            Image imageRow = new Image(pathUrl.get(), title, author, writtenDate, page, description);
+            Image imageRow = new Image(pathUrl.get().getLink(), pathUrl.get().getPathId(),
+                    title, author, writtenDate, page, description);
             imageRepository.save(imageRow);
             return true;
         }
