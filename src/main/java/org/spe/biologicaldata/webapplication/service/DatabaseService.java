@@ -72,9 +72,4 @@ public interface DatabaseService {
      */
    Boolean deleteImage(Image image);
 
-    /**
-     * Deletes all entries in the Database and in the Storage
-     * @return returns true if the process was a success, false otherwise
-     */
-    Boolean deleteAll();
 }

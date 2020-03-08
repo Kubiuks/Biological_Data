@@ -72,7 +72,7 @@ public class Database implements DatabaseService {
     public Boolean deleteImageById(Long id) {
         Optional<Image> image= imageRepository.findById(id);
         if(image.isPresent()) {
-            storageService.delete(image.get().getImageUrl());
+            storageService.delete(image.get().getBucketPathId());
             imageRepository.deleteById(id);
             return true;
         }
@@ -81,7 +81,7 @@ public class Database implements DatabaseService {
 
     @Override
     public Boolean deleteImage(Image image) {
-        if(!storageService.delete(image.getImageUrl()))
+        if(!storageService.delete(image.getBucketPathId()))
             return false;
         if(imageRepository.existsById(image.getId())) {
             imageRepository.delete(image);
@@ -90,9 +90,4 @@ public class Database implements DatabaseService {
         return false;
     }
 
-    @Override
-    public Boolean deleteAll() {
-        imageRepository.deleteAll();
-        return true;
-    }
 }
