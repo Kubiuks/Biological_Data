@@ -43,7 +43,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 //Html pages authenticated users can access
-//                .antMatchers("/extractText").authenticated()
+                .antMatchers("/extractText").authenticated()
                 //All the other pages can be accessed by everyone
                 .anyRequest().permitAll()
                 .and()
