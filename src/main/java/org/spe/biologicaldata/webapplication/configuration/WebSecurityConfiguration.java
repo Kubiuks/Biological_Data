@@ -1,5 +1,8 @@
 package org.spe.biologicaldata.webapplication.configuration;
 
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -11,10 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.net.ssl.SSLContext;
 import java.util.Arrays;
 
 @Configuration
@@ -63,7 +68,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .and()
             //Enable CORS
-            .cors();
+            .cors()
+                .and()
+            .requiresChannel()
+                .anyRequest()
+                .requiresSecure();;
     }
 
     @Bean
