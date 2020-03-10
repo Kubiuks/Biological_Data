@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Gallery</title>
@@ -16,10 +17,12 @@
 <div class="main">
 <header>
     <p  th:text = "'Images in Gallery:'"></p>
-    <form action="#" th:action="@{/gallery}" method="POST" enctype="multipart/form-data">
-        <input type="file" name="imageFile">
-        <input type="submit" value="Upload Image">
-    </form>
+    <div sec:authorize="isAuthenticated()">
+        <form action="#" th:action="@{/gallery/upload}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="imageFile">
+            <input type="submit" value="Upload Image">
+        </form>
+    </div>
 </header>
 
 <div class="sidebar">

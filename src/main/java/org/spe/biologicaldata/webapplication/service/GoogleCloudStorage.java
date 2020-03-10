@@ -1,6 +1,6 @@
 package org.spe.biologicaldata.webapplication.service;
 
-import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.Credentials;
 import com.google.cloud.storage.*;
 import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class GoogleCloudStorage implements StorageService {
     private static final Logger logger = LoggerFactory.getLogger(GoogleCloudStorage.class);
 
     @Autowired
-    public GoogleCloudStorage(GoogleCredentials googleCredentials, String googleProjectName,
+    public GoogleCloudStorage(Credentials googleCredentials, String googleProjectName,
                               String googleBucketName, String googleBucketGalleryPath){
         this.storage = StorageOptions.newBuilder().setCredentials(googleCredentials)
                 .setProjectId(googleProjectName).build().getService();

@@ -2,20 +2,16 @@ package org.spe.biologicaldata.webapplication.configuration;
 
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.Bucket;
-import com.google.cloud.storage.BucketInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.spe.biologicaldata.webapplication.service.AmazonS3Storage;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Configuration
@@ -49,13 +45,13 @@ public class GoogleCloudConfiguration {
     public String getGoogleGalleryPath(){return googleBucketGalleryPath;}
 
     @Bean(name = "googleCredentials")
-    public GoogleCredentials getGoogleCredentials() {
+    public Credentials getGoogleCredentials(ApplicationContext applicationContext) {
         try {
             return GoogleCredentials
                     .fromStream(new FileInputStream(this.googleCredentialsPath));
         } catch (IOException e) {
             logger.error("error: [" + e + "] happened while loading Google Credentials");
-            System.exit(1);
+            SpringApplication.exit(applicationContext, () -> 1);
             return null;
         }
     }

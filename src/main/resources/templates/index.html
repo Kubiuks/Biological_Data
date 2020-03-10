@@ -1,107 +1,210 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-	<title>Login V17</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="site_images/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="login/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-<!--=====================================================================================-->
-	<link rel="stylesheet" type="text/css" href="login/vendor/animate/animate.css">
-<!--=====================================================================================-->
-	<link rel="stylesheet" type="text/css" href="login/vendor/css-hamburgers/hamburgers.min.css">
-<!--=====================================================================================-->
-	<link rel="stylesheet" type="text/css" href="login/vendor/animsition/css/animsition.min.css">
-<!--=====================================================================================-->
-	<link rel="stylesheet" type="text/css" href="login/vendor/select2/select2.min.css">
-<!--=====================================================================================-->
-	<link rel="stylesheet" type="text/css" href="login/vendor/daterangepicker/daterangepicker.css">
-<!--=====================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main_login.css">
-<!--===============================================================================================-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Biological Data</title>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <link href="css/sidebar.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
 </head>
 
 
-<body>
-	
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<form class="login100-form validate-form" action="/" method="post">
-					<span class="login100-form-title p-b-34">
-						Account Login
-					</span>
-					
-					<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
-						<input id="first-name" class="input100" type="text" name="username" placeholder="User name">
-						<span class="focus-input100"></span>
-					</div>
-					<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
-						<span class="focus-input100"></span>
-					</div>
-					
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Sign in
-						</button>
-					</div>
 
-					<div class="w-full text-center p-t-27 p-b-239">
-						<span class="txt1">
-							Forgot
-						</span>
+<div class="sidebar">
 
-						<a href="#" class="txt2">
-							User name / password?
-						</a>
-					</div>
+    <div class="Welcome-user" sec:authorize="isAuthenticated()">
+        <form id="logoutForm" method="POST" action="#" th:action="@{/logout}">
+        </form>
 
-					<div class="w-full text-center">
-						<a href="#" class="txt3">
-							Sign Up
-						</a>
-					</div>
-				</form >
+        <h2>
+            <a>Welcome <span sec:authentication="name"></span></a>
+        </h2>
+    </div>
 
-				<div class="login100-more" style="background-image: url('site_images/background.jpg');"></div>
-			</div>
-		</div>
-	</div>
-	
-	
+    <h2>Sidebar</h2>
+    <ul>
+        <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
+        <li><a href="/extractText"><i class="fas fa-font"></i></i>Text Extract</a></li>
+        <li><a href="/extractInfo"><i class="fas fa-info"></i></i>Information Extract</a></li>
+        <li><a href="/gallery"><i class="fas fa-image"></i>Gallery</a></li>
+        <li><a href="#"><i class="fas fa-address-card"></i>About</a></li>
+        <li><a href="#"><i class="fas fa-address-book"></i>Contact</a></li>
+    </ul>
+    <div class="Logout" sec:authorize="isAuthenticated()">
+        <a href="#" onclick="document.forms['logoutForm'].submit()">Logout</a>
+    </div>
+    <div class="social_media">
+        <a href="https://www.facebook.com/BristolMuseumandArtGallery/"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com/bristolmuseum"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/bristolmuseums/"><i class="fab fa-instagram"></i></a>
+    </div>
 
-	<div id="dropDownSelect1"></div>
-	
-<!--===============================================================================================-->
-	<script src="login/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--=====================================================================================-->
-	<script src="login/vendor/animsition/js/animsition.min.js"></script>
-<!--=====================================================================================-->
-	<script src="login/vendor/bootstrap/js/popper.js"></script>
-	<script src="login/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--=====================================================================================-->
-	<script src="login/vendor/select2/select2.min.js"></script>
-	<script>
-		$(".selection-2").select2({
-			minimumResultsForSearch: 20,
-			dropdownParent: $('#dropDownSelect1')
-		});
-	</script>
-<!--===============================================================================================-->
-	<script src="login/vendor/daterangepicker/moment.min.js"></script>
-	<script src="login/vendor/daterangepicker/daterangepicker.js"></script>
-<!--=====================================================================================-->
-	<script src="login/vendor/countdowntime/countdowntime.js"></script>
-<!--=====================================================================================-->
-	<script src="login/js/main.js"></script>
+</div>
 
-</body>
+<div class="main">
+
+<header>
+    <h1 id="elo">Biological Data</h1>
+</header>
+
+<div id="top"></div>
+<section class="gallery">
+    <div class="row">
+        <ul>
+            <a href="#" class="close"></a>
+            <li>
+                <a class="image" href="#item01">
+                    <img id="zdj" src="images/Moth Trap - 1931 - Data.JPG" alt="">
+                </a>
+            </li>
+
+            <li>
+                <a class="image" href="#item02">
+                    <img src="images/Moth Trap - 1931.JPG" alt="">
+                </a>
+            </li>
+
+            <li>
+                <a class="image" href="#item03">
+                    <img src="images/Notes on Butterflies _ Moths of Somersetshire - Data ii.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item04">
+                    <img src="images/Vol VII - 1960-63 - Data ii.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item05">
+                    <img src="images/Entomological Notes Vol I 1946-48 - Data ii.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item06">
+                    <img src="images/Collector info - moth book 1.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item07">
+                    <img src="images/Vol VIII - Data.JPG" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="image" href="#item08">
+                    <img src="images/Volumes VIII - XI.JPG" alt="">
+                </a>
+            </li>
+        </ul>
+    </div> <!-- / row -->
+
+    <!-- Item 01 -->
+    <div id="item01" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 01</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+
+            <img src="images/Moth Trap - 1931 - Data.JPG" alt="">
+        </div>
+    </div> <!-- / row -->
+
+    <!-- Item 02 -->
+    <div id="item02" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="images/Moth Trap - 1931.JPG" alt="">
+        </div> <!-- / row -->
+
+    </div> <!-- / Item 02 -->
+
+    <div id="item03" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="images/Notes on Butterflies _ Moths of Somersetshire - Data ii.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item04" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="images/Vol VII - 1960-63 - Data ii.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item05" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="images/Entomological Notes Vol I 1946-48 - Data ii.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item06" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="images/Collector info - moth book 1.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item07" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="images/Vol VIII - Data.JPG" alt="">
+        </div>
+
+    </div>
+
+    <div id="item08" class="port">
+
+        <div class="row">
+            <div class="description">
+                <h1>Item 02</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+            </div>
+            <img src="images/Volumes VIII - XI.JPG" alt="">
+        </div>
+
+    </div>
+
+
+</section> <!-- / projects -->
+
+</div>
+
 </html>

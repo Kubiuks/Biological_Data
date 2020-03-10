@@ -35,7 +35,7 @@ public class HelloController {
 
     @RequestMapping(value = "/home")
     public  String home() {
-        return "home";
+        return "index";
     }
 
     @RequestMapping(value = "/home2")
@@ -50,7 +50,7 @@ public class HelloController {
         model.addAttribute("images",images);
         return "gallery"; }
 
-    @PostMapping("/gallery")
+    @PostMapping("/gallery/upload")
     //TODO change to a an error message instead
     public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
         try {
@@ -67,13 +67,5 @@ public class HelloController {
             return "error";
         }
     }
-
-    // For now only returns home
-    @PostMapping("/")
-    public String login(){
-        return "redirect:/home";
-    }
-
-
 
 }
