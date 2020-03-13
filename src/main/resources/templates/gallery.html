@@ -17,12 +17,6 @@
 <div class="main">
 <header>
     <p  th:text = "'Images in Gallery:'"></p>
-    <div sec:authorize="isAuthenticated()">
-        <form action="#" th:action="@{/gallery/upload}" method="POST" enctype="multipart/form-data">
-            <input type="file" name="imageFile">
-            <input type="submit" value="Upload Image">
-        </form>
-    </div>
 </header>
 
 <div class="sidebar">
@@ -42,6 +36,35 @@
     </div>
 </div>
 
+<div class="main" sec:authorize="isAuthenticated()">
+    <form action="#" th:action="@{/gallery/upload}" method="POST" th:object="${imageFile}" enctype="multipart/form-data">
+        <table>
+            <tr class="form-group"><td>
+                <label><input th:type="file" th:field="*{file}" name = "multipartFilesDocument"
+                              value="multipartFilesDocument" class="form-control" placeholder="Image"></label>
+            </td></tr>
+            <tr class="form-group"><td>
+                <label><input th:type="text" th:field="*{title}" class="form-control" placeholder="Title"/></label>
+            </td></tr>
+            <tr class="form-group"><td>
+                <label><input th:type="text" th:field="*{author}" class="form-control" placeholder="Author"/></label>
+            </td></tr>
+            <tr class="form-group"><td>
+                <label><input th:type="text" th:field="*{writtenDate}" class="form-control" placeholder="Written date"/></label>
+            </td></tr>
+            <tr class="form-group"><td>
+                <label><input th:type="text" th:field="*{page}" class="form-control" placeholder="Page"/></label>
+            </td></tr>
+            <tr class="form-group"><td>
+                <label><textarea id="textArea" th:field="*{description}" class="form-control" placeholder="Description" cols="20" rows="10"></textarea></label>
+            </td></tr>
+            <tr class="form-group"><td>
+                <input type="submit" value="Upload Image">
+            </td></tr>
+        </table>
+    </form>
+</div>
+
 <div id="top"></div>
 <section class="gallery">
     <div class="row">
@@ -59,8 +82,12 @@
 
         <div class="row">
             <div class="description">
-                <h1 th:text = "${image.getTitle()}"></h1>
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis libero erat. Integer ac purus est. Proin erat mi, pulvinar ut magna eget, consectetur auctor turpis.</p>
+                <h1 th:text = "'Title: ' + ${image.getTitle()}"></h1>
+                <h2 th:text = "'Author: ' + ${image.getAuthor()}"></h2>
+                <p th:text = "'Written Data: ' + ${image.getWrittenDate()}"></p>
+                <p th:text = "'Page: '+ ${image.getPage()}"></p>
+                <p th:text = "'Description: ' + ${image.getDescription()}"></p>
+                <p th:text = "'Transcription: ' + ${image.getTranscription()}"></p>
             </div>
 
             <img th:src = "@{ ${image.getImageUrl()} }" th:alt = "${image.getTitle()}">

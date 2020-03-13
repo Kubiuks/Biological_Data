@@ -11,8 +11,6 @@ import java.io.IOException;
 @ControllerAdvice
 public class ExtractTextController {
 
-    Textextract textextract = new Textextract();
-
     @GetMapping(value = "/extractText")
     public  ModelAndView extractTextPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -22,7 +20,7 @@ public class ExtractTextController {
 
     @PostMapping(value = "/extractText", consumes = "application/json", produces = "application/json")
     public StringWrapper extractText(@RequestBody StringWrapper imageFile) throws IOException {
-        String extracted_text = textextract.getText("src/main/resources/static/images/" + imageFile.getValue());
+        String extracted_text = Textextract.getText("src/main/resources/static/images/" + imageFile.getValue());
         StringWrapper response = new StringWrapper();
         response.setValue(extracted_text);
         return response;

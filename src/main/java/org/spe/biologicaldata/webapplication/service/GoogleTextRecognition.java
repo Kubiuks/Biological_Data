@@ -67,7 +67,7 @@ public class GoogleTextRecognition implements  TextRecognitionService {
     @Override
     public Optional<String> getTextFromLink(String imageLink){
         try {
-            ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(imageLink).build();
+            ImageSource imgSource = ImageSource.newBuilder().setImageUri(imageLink).build();
             Image image = Image.newBuilder().setSource(imgSource).build();
             return Optional.of(getStringFromResponse(image));
         } catch (Exception e) {
@@ -81,7 +81,7 @@ public class GoogleTextRecognition implements  TextRecognitionService {
         try {
             List<Image> images = new ArrayList<>();
             for (String imageLink : imageLinks) {
-                ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(imageLink).build();
+                ImageSource imgSource = ImageSource.newBuilder().setImageUri(imageLink).build();
                 images.add(Image.newBuilder().setSource(imgSource).build());
             }
             return Optional.of(getListOfStringsFromResponses(images));
@@ -115,24 +115,23 @@ public class GoogleTextRecognition implements  TextRecognitionService {
     }
 
     private String getStringFromResponse(Image image) {
-        StringBuilder sb = new StringBuilder();
-        getAnnotateResponses(Collections.singletonList(image))
+        return getAnnotateResponses(Collections.singletonList(image))
                 .get(0)
                 .getTextAnnotationsList()
-                .forEach( (annotation) -> sb.append(annotation.getDescription()));
-        return sb.toString();
+                .get(0)
+                .getDescription();
     }
 
     private List<String> getListOfStringsFromResponses(List<Image> images) {
         List<String> texts = new ArrayList<>();
         getAnnotateResponses(images)
-                .forEach( (res) -> {
-                    StringBuilder sb = new StringBuilder();
-                    res
-                            .getTextAnnotationsList()
-                            .forEach( (annotation) -> sb.append(annotation.getDescription()) );
-                    texts.add(sb.toString());
-                });
+                .forEach( (res) -> texts
+                                    .add( res
+                                            .getTextAnnotationsList()
+                                            .get(0)
+                                            .getDescription()
+                                    )
+                );
         return texts;
     }
 

@@ -72,7 +72,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
             .requiresChannel()
                 .anyRequest()
-                .requiresSecure();;
+                .requiresSecure();
     }
 
     @Bean

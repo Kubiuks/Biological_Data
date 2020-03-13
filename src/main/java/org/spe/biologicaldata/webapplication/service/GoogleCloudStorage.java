@@ -37,7 +37,7 @@ public class GoogleCloudStorage implements StorageService {
     public Optional<ImagePathWrapper> store(MultipartFile file, Boolean enablePublicReadAccess) {
         try{
             String contentType = Objects.requireNonNull(file.getContentType()).split("/")[1];
-            String fileName =  RandomString.make(10) + "." + contentType;
+            String fileName = RandomString.make(10) + "." + contentType;
             String googleFilePath = googleBucketGalleryPath + fileName;
 
             BlobInfo blobInfo;

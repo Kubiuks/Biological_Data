@@ -3,16 +3,17 @@ package org.spe.biologicaldata.webapplication.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spe.biologicaldata.webapplication.model.Image;
+import org.spe.biologicaldata.webapplication.model.User;
 import org.spe.biologicaldata.webapplication.service.DatabaseService;
+import org.spe.biologicaldata.webapplication.service.TextRecognitionService;
+import org.spe.biologicaldata.webapplication.wrapper.ImageFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,11 +21,13 @@ import java.util.Objects;
 public class HelloController {
 
     private final DatabaseService databaseService;
+    private final TextRecognitionService textRecognitionService;
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
 
     @Autowired
-    public HelloController(DatabaseService databaseService) {
+    public HelloController(DatabaseService databaseService, TextRecognitionService textRecognitionService) {
         this.databaseService = databaseService;
+        this.textRecognitionService = textRecognitionService;
     }
 
     @GetMapping(value = {"/", "index"})
@@ -48,22 +51,25 @@ public class HelloController {
     public String gallery(Model model) {
         List<Image> images = databaseService.getImages();
         model.addAttribute("images",images);
+        model.addAttribute("imageFile", new ImageFile());
         return "gallery"; }
 
     @PostMapping("/gallery/upload")
     //TODO change to a an error message instead
-    public String uploadImage(@RequestParam("imageFile") MultipartFile imageFile, Model model) {
+    public String uploadImage(@Valid @ModelAttribute("imageFile") ImageFile imageFile, Model model) {
         try {
-            if (!Objects.requireNonNull(imageFile.getContentType()).split("/")[0].equals("image")) {
+            if (!Objects.requireNonNull(imageFile.getFile().get(0).getContentType()).split("/")[0].equals("image")) {
+                return "error";
+            }System.out.println(imageFile.getDescription());
+            if(!databaseService.storeImage(imageFile.getTitle(), imageFile.getAuthor(),
+                    imageFile.getWrittenDate(), imageFile.getPage(), imageFile.getDescription(),
+                    imageFile.getFile().get(0), true)) {
+                logger.error("[error: could not save file " + imageFile.getFile().get(0).getName() + "]");
                 return "error";
             }
-            if(!databaseService.storeImage(new Image(), imageFile, true)) {
-                logger.error("[error: could not save file " + imageFile.getName() + "]");
-                return "error";
-            }
-            return gallery(model);
+            return "redirect:/gallery";
         } catch (NullPointerException e) {
-            logger.error("[error: " + e + " happened while saving file " + imageFile.getName() + "]");
+            logger.error("[error: " + e + " happened while saving file " + imageFile.getFile().get(0).getName() + "]");
             return "error";
         }
     }
