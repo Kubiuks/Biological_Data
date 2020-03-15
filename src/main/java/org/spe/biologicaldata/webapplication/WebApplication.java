@@ -2,6 +2,7 @@ package org.spe.biologicaldata.webapplication;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.expression.BeanFactoryAccessor;
 
 @SpringBootApplication
 public class WebApplication {

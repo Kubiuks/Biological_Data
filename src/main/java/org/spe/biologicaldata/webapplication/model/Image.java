@@ -27,6 +27,12 @@ public class Image {
     private String imageUrl;
 
     /**
+     * The Id of the image in the Bucket where it is stored
+     */
+    @Column(name = "bucket_path_id", nullable = false, unique = true) @Getter @Setter
+    private String bucketPathId;
+
+    /**
      * The title of the image, what the image represents, for example the book
      * where it came from and
      */
@@ -76,6 +82,7 @@ public class Image {
      */
     public Image() {
         this.imageUrl = "";
+        this.bucketPathId = "";
         this.title = "";
         this.author = "";
         this.writtenDate = "";
@@ -89,6 +96,7 @@ public class Image {
      * Full constructor, including all the information about the image, apart from transcription
      * which is believed to be processed later / in a longer period of time
      * @param imageUrl The path Url to where the image is stored
+     * @param bucketPathId The Id of the image in the Bucket where it is stored
      * @param title The title of the image, what the image represents, for example the book
      *                  where it came from and
      * @param author The author of the book depicted in the image
@@ -97,9 +105,11 @@ public class Image {
      * @param page The number of the page in the book that the image depicts
      * @param description The description of the image, if the title is not enough
      */
-    public Image(String imageUrl, String title, String author, String writtenDate,
+    public Image(String imageUrl, String bucketPathId, String title, String author, String writtenDate,
                         String page, String description) {
         this.imageUrl = imageUrl;
+        this.bucketPathId = bucketPathId;
+        this.bucketPathId = imageUrl;
         this.title = title;
         this.author = author;
         this.writtenDate = writtenDate;

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Create an account</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <form method="POST" action="#"  th:action="@{/register}" th:object="${userForm}" class="form-signin">
+        <h2 class="form-signin-heading">Create your account</h2>
+        <table>
+            <tr class="form-group">
+                    <td>Username:</td>
+                    <td>
+                        <label><input type="text" th:field="*{username}" class="form-control" placeholder="Username" autofocus/></label>
+                    </td>
+                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</td>
+            </tr>
+
+            <tr class="form-group">
+                <td>Password:</td>
+                <td>
+                    <label><input type="password" th:field="*{password}" class="form-control" placeholder="Password"/></label>
+                </td>
+                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
+            </tr>
+
+            <tr class="form-group">
+                <td>Confirm Password:</td>
+                <td>
+                <label><input type="password" th:field="*{passwordConfirm}" class="form-control"
+                                placeholder="Confirm your password"/></label>
+                </td>
+                <td th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">PasswordConfirm Error</td>
+            </tr>
+
+            <tr class="submit-button">
+                <td>
+                    <button class="button-submit" type="submit">Submit</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+
+</body>
+</html>

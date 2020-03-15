@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 public class UserController {
 
@@ -27,19 +29,18 @@ public class UserController {
     }
 
     //TODO make the page
-    @GetMapping("/registration")
-    public String registration(Model model) {
+    @GetMapping("/register")
+    public String register(Model model) {
         model.addAttribute("userForm", new User());
-
-        return "registration";
+        return "register";
     }
 
-    @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    @PostMapping("/register")
+    public String register(@Valid @ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "register";
         }
 
         userService.save(userForm);
@@ -57,7 +58,7 @@ public class UserController {
             model.addAttribute("error", "Your username and password is invalid.");
 
         if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
+            model.addAttribute("logout", "You have been logged out successfully.");
 
         return "login";
     }

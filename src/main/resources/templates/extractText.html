@@ -6,6 +6,8 @@
     <link href="css/sidebar.css" rel="stylesheet"/>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <script type="text/javascript" src="js/extractText.js"></script>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
 <body>
@@ -36,10 +38,13 @@
     <script>
         const button = document.getElementById('submit');
         button.addEventListener('click', async event => {
-            const data = document.getElementById("file").files[0].name;
-            await sendHttpRequest('POST', '/extractText', data)
+            const imageFile =
+                {
+                   value : document.getElementById("file").files[0].name
+                };
+            await sendHttpRequest('POST', '/extractText', imageFile)
                 .then(responseData => {
-                    document.getElementById('textArea').value = responseData;
+                    document.getElementById('textArea').value = JSON.parse(responseData)["value"];
                 })
                 .catch(err =>{
                     console.log(err);

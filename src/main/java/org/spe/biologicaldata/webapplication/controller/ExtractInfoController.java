@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class extractInfoController {
+public class ExtractInfoController {
     @RequestMapping(value = "/extractInfo")
     public  String home2() {
         return "extractInfo";

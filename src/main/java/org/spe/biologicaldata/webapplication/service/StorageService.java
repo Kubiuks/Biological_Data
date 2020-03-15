@@ -1,11 +1,9 @@
 package org.spe.biologicaldata.webapplication.service;
 
-import org.springframework.core.io.Resource;
-import org.springframework.scheduling.annotation.Async;
+import org.spe.biologicaldata.webapplication.wrapper.ImagePathWrapper;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Path;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 /**
  * Interface for a Storage Service, every storage method must implement this interface
@@ -15,21 +13,29 @@ public interface StorageService {
         /**
          * Stores a file in the storage
          * @param file the file to be stored
-         * @param enablePublicReadAccess enables public read access
+         * @param enablePublicReadAccess enables public read access to the image
          * @return a string representing the path to the created file
          */
-        String store(MultipartFile file, Boolean enablePublicReadAccess);
+        Optional<ImagePathWrapper> store(MultipartFile file, Boolean enablePublicReadAccess);
 
         /**
          * Deletes a file
          * @param path the path to that file
+         * @return true if the process was a success, false otherwise
          */
-        @Async
-        void delete(String path);
+        Boolean delete(String path);
+
+//        /**
+//         * Deletes all files inside the storage
+//         * Do not use, unless strictly necessary
+//         * @return true if the process was a success, false otherwise
+//         */
+//        Boolean deleteAll();
 
         /**
-         * Deletes all files inside the storage
+         * Returns a file from the path, it it exist
+         * @return a file, if there is one at the path, or empty otherwise
          */
-        @Async
-        void deleteAll();
+        Optional<byte[]> retrieveFile(String path);
+
 }
