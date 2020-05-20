@@ -7,8 +7,6 @@ const sendHttpRequest = (method, url, data) => {
         const token = document.querySelector('meta[name="_csrf"]').content;
         const header = document.querySelector('meta[name="_csrf_header"]').content;
         xhr.setRequestHeader(header, token);
-        xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        xhr.setRequestHeader("Accept", "application/json");
 
         xhr.onload = () => {
             if (xhr.status >= 400) {
@@ -21,7 +19,7 @@ const sendHttpRequest = (method, url, data) => {
         xhr.onerror = () => {
             reject('Something went wrong!');
         };
-        xhr.send(JSON.stringify(data));
+        xhr.send(data);
 
     });
     return promise;

@@ -25,113 +25,113 @@ import java.util.ArrayList;
 import java.util.List;
 @SpringBootTest
 class TextextractTest{
-
-	@Test
-	void ectracttextfromjson() throws IOException{
-		String string=Textextract.getText("src/main/resources/static/test/test.jpg");
-		System.out.println(string);
-	  }
-
-	@Test
-	void testimagecontents() throws Exception{
-
-
-		Credentials myCredentials = ServiceAccountCredentials.fromStream(
-			new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
-		
-		ImageAnnotatorSettings imageAnnotatorSettings =
-			ImageAnnotatorSettings.newBuilder()
-			.setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
-			.build();
-
-
-
-
-
-			// Instantiates a client
-			try (ImageAnnotatorClient vision = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
-
-				// The path to the image file to annotate
-				String fileName = "src/main/resources/static/test/test.jpg";
-		  
-				// Reads the image file into memory
-				Path path = Paths.get(fileName);
-				byte[] data = Files.readAllBytes(path);
-				ByteString imgBytes = ByteString.copyFrom(data);
-		  
-				// Builds the image annotation request
-				List<AnnotateImageRequest> requests = new ArrayList<>();
-				Image img = Image.newBuilder().setContent(imgBytes).build();
-				Feature feat = Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
-				AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
-					.addFeatures(feat)
-					.setImage(img)
-					.build();
-				requests.add(request);
-		  
-				// Performs label detection on the image file
-				BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
-				List<AnnotateImageResponse> responses = response.getResponsesList();
-		  
-				for (AnnotateImageResponse res : responses) {
-				  if (res.hasError()) {
-					System.out.printf("Error: %s\n", res.getError().getMessage());
-					return;
-				  }
-		  
-				  for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
-					annotation.getAllFields().forEach((k, v) ->
-						System.out.printf("%s : %s\n", k, v.toString()));
-				  }
-				}
-			  }
-			}
-
-
-
-	@Test
-	void getTexttest() throws Exception, IOException {
-		Credentials myCredentials = ServiceAccountCredentials.fromStream(
-			new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
-		
-		ImageAnnotatorSettings imageAnnotatorSettings =
-			ImageAnnotatorSettings.newBuilder()
-			.setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
-			.build();
-
-
-
-
-		PrintStream out=System.out;
-		String filePath="src/main/resources/static/test/test.jpg";
-  List<AnnotateImageRequest> requests = new ArrayList<>();
-
-  ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
-
-  Image img = Image.newBuilder().setContent(imgBytes).build();
-  Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
-  AnnotateImageRequest request =
-      AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-  requests.add(request);
-
-  try (ImageAnnotatorClient client = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
-    BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
-    List<AnnotateImageResponse> responses = response.getResponsesList();
-
-    for (AnnotateImageResponse res : responses) {
-      if (res.hasError()) {
-        out.printf("Error: %s\n", res.getError().getMessage());
-        return;
-      }
-	  out.printf(res.getTextAnnotationsList().get(0).getDescription());
-      // For full list of available annotations, see http://g.co/cloud/vision/docs
-      for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-        out.printf("Text: %s\n", annotation.getDescription());
-        out.printf("Position : %s\n", annotation.getBoundingPoly());
-      }
-    }
-  }
-}
+//
+//	@Test
+//	void ectracttextfromjson() throws IOException{
+//		String string=Textextract.getText("src/main/resources/static/test/test.jpg");
+//		System.out.println(string);
+//	  }
+//
+//	@Test
+//	void testimagecontents() throws Exception{
+//
+//
+//		Credentials myCredentials = ServiceAccountCredentials.fromStream(
+//			new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
+//
+//		ImageAnnotatorSettings imageAnnotatorSettings =
+//			ImageAnnotatorSettings.newBuilder()
+//			.setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+//			.build();
+//
+//
+//
+//
+//
+//			// Instantiates a client
+//			try (ImageAnnotatorClient vision = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
+//
+//				// The path to the image file to annotate
+//				String fileName = "src/main/resources/static/test/test.jpg";
+//
+//				// Reads the image file into memory
+//				Path path = Paths.get(fileName);
+//				byte[] data = Files.readAllBytes(path);
+//				ByteString imgBytes = ByteString.copyFrom(data);
+//
+//				// Builds the image annotation request
+//				List<AnnotateImageRequest> requests = new ArrayList<>();
+//				Image img = Image.newBuilder().setContent(imgBytes).build();
+//				Feature feat = Feature.newBuilder().setType(Type.LABEL_DETECTION).build();
+//				AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
+//					.addFeatures(feat)
+//					.setImage(img)
+//					.build();
+//				requests.add(request);
+//
+//				// Performs label detection on the image file
+//				BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
+//				List<AnnotateImageResponse> responses = response.getResponsesList();
+//
+//				for (AnnotateImageResponse res : responses) {
+//				  if (res.hasError()) {
+//					System.out.printf("Error: %s\n", res.getError().getMessage());
+//					return;
+//				  }
+//
+//				  for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
+//					annotation.getAllFields().forEach((k, v) ->
+//						System.out.printf("%s : %s\n", k, v.toString()));
+//				  }
+//				}
+//			  }
+//			}
+//
+//
+//
+//	@Test
+//	void getTexttest() throws Exception, IOException {
+//		Credentials myCredentials = ServiceAccountCredentials.fromStream(
+//			new FileInputStream("src/main/resources/textract-15059e3faf5f.json"));
+//
+//		ImageAnnotatorSettings imageAnnotatorSettings =
+//			ImageAnnotatorSettings.newBuilder()
+//			.setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+//			.build();
+//
+//
+//
+//
+//		PrintStream out=System.out;
+//		String filePath="src/main/resources/static/test/test.jpg";
+//  List<AnnotateImageRequest> requests = new ArrayList<>();
+//
+//  ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+//
+//  Image img = Image.newBuilder().setContent(imgBytes).build();
+//  Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
+//  AnnotateImageRequest request =
+//      AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+//  requests.add(request);
+//
+//  try (ImageAnnotatorClient client = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
+//    BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+//    List<AnnotateImageResponse> responses = response.getResponsesList();
+//
+//    for (AnnotateImageResponse res : responses) {
+//      if (res.hasError()) {
+//        out.printf("Error: %s\n", res.getError().getMessage());
+//        return;
+//      }
+//	  out.printf(res.getTextAnnotationsList().get(0).getDescription());
+//      // For full list of available annotations, see http://g.co/cloud/vision/docs
+//      for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+//        out.printf("Text: %s\n", annotation.getDescription());
+//        out.printf("Position : %s\n", annotation.getBoundingPoly());
+//      }
+//    }
+//  }
+//}
 
 
 	}
