@@ -25,7 +25,7 @@ import java.util.Optional;
 public class GoogleTextRecognition implements  TextRecognitionService {
     private static final Logger logger = LoggerFactory.getLogger(GoogleTextRecognition.class);
 
-    ImageAnnotatorClient imageAnnotatorClient;
+    private ImageAnnotatorClient imageAnnotatorClient;
 
     @Autowired
     GoogleTextRecognition(Credentials googleVisionCredentials, ApplicationContext applicationContext){
@@ -36,7 +36,7 @@ public class GoogleTextRecognition implements  TextRecognitionService {
             );
         } catch (IOException e){
             logger.error("error: [" + e + "] happened while loading Image Annotator Client");
-            SpringApplication.exit(applicationContext, () -> 1);
+//            SpringApplication.exit(applicationContext.getContext(), () -> 1);
         }
     }
 

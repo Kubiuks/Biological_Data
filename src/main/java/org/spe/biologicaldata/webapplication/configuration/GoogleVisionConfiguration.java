@@ -5,13 +5,13 @@ import com.google.auth.oauth2.GoogleCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class GoogleVisionConfiguration {
@@ -21,16 +21,16 @@ public class GoogleVisionConfiguration {
     private String googleVisionCredentialsPath;
 
     @Bean(name = "googleVisionCredentialsPath")
-    public String getGoogleGalleryPath(){return googleVisionCredentialsPath;}
+    public String getGoogleCredentialsPath(){return googleVisionCredentialsPath;}
 
     @Bean(name = "googleVisionCredentials")
     public Credentials getGoogleCredentials(ApplicationContext applicationContext) {
         try {
-            return GoogleCredentials
-                    .fromStream(new FileInputStream(this.googleVisionCredentialsPath));
+            logger.info("Loading Vision Credentials");
+            return GoogleCredentials.fromStream(applicationContext.getResource(this.googleVisionCredentialsPath).getInputStream());
         } catch (IOException e) {
             logger.error("error: [" + e + "] happened while loading Google Vision Credentials");
-            SpringApplication.exit(applicationContext, () -> 1);
+//            SpringApplication.exit(applicationContext.getContext(), () -> 1);
             return null;
         }
     }

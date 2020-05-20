@@ -33,16 +33,14 @@
 
 
 <div class="center">
-    <input id="file" type="file" name="imageFile" />
+    <input id="file" type="file" name="imageFile" value="multipartFilesDocument"/>
     <button id="submit">submit</button>
     <script>
         const button = document.getElementById('submit');
         button.addEventListener('click', async event => {
-            const imageFile =
-                {
-                   value : document.getElementById("file").files[0].name
-                };
-            await sendHttpRequest('POST', '/extractText', imageFile)
+            const formData = new FormData();
+            formData.append("file", document.getElementById("file").files[0]);
+            await sendHttpRequest('POST', '/extractText', formData)
                 .then(responseData => {
                     document.getElementById('textArea').value = JSON.parse(responseData)["value"];
                 })
