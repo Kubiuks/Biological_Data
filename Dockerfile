@@ -1,5 +1,5 @@
 FROM adoptopenjdk/openjdk11
-RUN addgroup -S spring && adduser -S spring -G spring
+RUN addgroup --system spring && adduser --system spring && usermod -aG spring spring
 USER spring:spring
 ARG JAR_FILE=target/*.jar
 ARG DEPENDENCY=target/dependency
