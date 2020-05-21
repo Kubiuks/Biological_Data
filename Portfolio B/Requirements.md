@@ -31,6 +31,11 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 3. As an environmental scientist, I want to gain digital data from the museum, so that I have more sources to analyse the effects of climate change.
 4. As a basic user, I want to be able to view some of the museum's handwritten documents digitally
 
+### Use-case Diagram
+
+![Use-case Diagram](images/Use-caseDiagram.png)
+
+
 ### Requirements Solutions 
 ##### Requirement 1 Solution | Viewing website
 1. The user accesses the address of the website.
@@ -57,6 +62,7 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 1. The user is prompted with the home page
 
 ###### Alternative flow
+
 4.a The user types in a wrong combination of username and password \
 4.b The user is prompted again with the log in page and an error message
 
@@ -66,7 +72,7 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 
 ##### Requirement 3 Solution | Upload an image
 1. The user accesses the website and logs in.
-1. THe user presses on Gallery.
+1. The user presses on Gallery.
 1. The user presses on the Choose File button at the top of the page and chooses an image.
 1. The user completes the text fields below the Choose File button with additional information about the image.
 1. The user presses on the Upload Image button.
