@@ -37,7 +37,7 @@ Unfortunately, this last iteration of the product has been greatly influenced by
 ![Nielsen's Heuristics](images/Nielsen'sHeuristics.jpeg)
 
 \
-And here are the results of the evaluation:
+And here are some of the results of the evaluation:
 
 | Description of issue &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Heuristic(s) addressed | Frequency 0(rare) to 4(common) | Impact 0(easy) to 4(difficult) | Persistence 0(once) to 4(repeated) | Severity (F+I+P)/3 |
 | :-----               |    :-------------:     | :-------: | :-------: | :-------: | --------: |
