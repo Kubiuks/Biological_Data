@@ -41,15 +41,12 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 1. Upon pressing the X button on the right side, all the images are visible again.
 
 ###### Alternative flow
-3.a The user presses Text Extract instead.
-
+3.a The user presses Text Extract instead. \
 3.b The user is prompted with the Login page.
 
 ###### Exceptional Flow
-1.a The user accesses the address through http rather then https.
-
-1.b The page refuses to load. User case ends.
-
+1.a The user accesses the address through http rather then https. \
+1.b The page refuses to load. User case ends. \
 1.a The user does not have internet. User case ends.
 
 ##### Requirement 2 Solution | Login
@@ -60,7 +57,7 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 1. The user is prompted with the home page
 
 ###### Alternative flow
-4.a The user types in a wrong combination of username and password
+4.a The user types in a wrong combination of username and password \
 4.b The user is prompted again with the log in page and an error message
 
 ###### Exceptional Flow
@@ -77,13 +74,11 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 
 ###### Alternative flow
 
-1.a The user does not log in.
-
+1.a The user does not log in. \
 1.b When the user presses on Gallery, there will be no Choose File button.
 
 ###### Exceptional Flow
 
-3.a The user chooses a file that is not an image.
-
+3.a The user chooses a file that is not an image. \
 3.b When the user presses on the Upload Image button, the user will be prompted with an error page.
 
