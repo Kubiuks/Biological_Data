@@ -88,3 +88,27 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 3.a The user chooses a file that is not an image. \
 3.b When the user presses on the Upload Image button, the user will be prompted with an error page.
 
+
+
+#### Requirement 4 Solution |  Extracting text from an image
+
+1. The user loads the application in their browser
+1. The user enters their login details in the front page
+1. The user navigates to the "Upload image" section
+1. The user browses their pc and chooses an image to upload
+1. The image gets stored in the database and gallery
+1. The user navigates to the "text extract" section
+1. the user chooses the previous image from the gallery
+1. the application sends a request to the cloud vision api
+1. the application receives the request from the cloud vision api
+1. the application displays the text in a text box for the user to edit and save.
+
+
+##### Alternative flow
+ 1. the desired image is already stored in the application
+ 2. The user can continue the previous steps without needing to upload an image
+
+##### Exceptional flow
+ 1. The application cannot communicate with the cloud vision service
+ 2. The application returns an error to the user notifying them to contact an admin about the issue.
+
