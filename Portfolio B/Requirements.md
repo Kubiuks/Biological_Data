@@ -135,3 +135,30 @@ Requirement Number | I want to... | ...so that...
 9.b The application logs the error for an administrator to investigate it.
 
 ### Non-Functional Requirements 
+
+#### Usability Requirements
+
+In order to improve the "user experience" for people visiting the web app,
+we had to consider issues relating to ease of access and use of the website.
+Here are most important principles our design should follow:
+1. Errors should be prevented wherever possible. If the user still encounters
+an error, there should be help provided to deal with the error.
+2. Design should be intuitive and minimalistic, the user should not have to
+think what they have to do to achieve their goal. The path leading to their
+goal should be straightforward.
+3. Design should follow prevalent solutions to common problems. The user
+should not have to learn how our design works, instead he should be familiar
+with it from other sources.
+
+#### Security Requirements
+
+1. Communication should take place over secure https channels
+2. Access to Database, Storage and Text Extract must be admin-only
+3. Sensitive data should be stored only in the cloud, so the breach is unlikely
+4. The web app should have a SSL certificate, to be recognised as a real website
+
+#### Accessibility Requirements
+
+1. After deployment, the web app should be available for everyone on the 
+internet.
+2. The web app should be friendly to disabled visitors.
