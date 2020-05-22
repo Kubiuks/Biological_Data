@@ -141,6 +141,7 @@ Requirement Number | I want to... | ...so that...
 In order to improve the "user experience" for people visiting the web app,
 we had to consider issues relating to ease of access and use of the website.
 Here are most important principles our design should follow:
+
 1. Errors should be prevented wherever possible. If the user still encounters
 an error, there should be help provided to deal with the error.
 2. Design should be intuitive and minimalistic, the user should not have to
