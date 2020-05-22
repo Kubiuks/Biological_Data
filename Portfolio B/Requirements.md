@@ -58,6 +58,8 @@ Requirement Number | I want to... | ...so that...
 
 #### Requirements Solutions 
 ##### Requirement 1/5 Solution | Viewing website
+
+###### Basic flow
 1. The user accesses the address of the website.
 1. The home page is presented to the user.
 1. From the left side menu the user presses Gallery.
@@ -75,6 +77,8 @@ Requirement Number | I want to... | ...so that...
 1.a The user does not have internet. User case ends.
 
 ##### Requirement 2 Solution | Login
+
+###### Basic flow
 1. The user accesses the website 
 1. From the left side menu, the user presses on Login
 1. The user is prompted with the log in page
@@ -91,6 +95,8 @@ Requirement Number | I want to... | ...so that...
 4.a The user does not have an account. User case ends.
 
 ##### Requirement 3 Solution | Upload an image
+
+###### Basic flow
 1. The user accesses the website and logs in.
 1. The user presses on Gallery.
 1. The user presses on the Choose File button at the top of the page and chooses an image.
@@ -112,6 +118,20 @@ Requirement Number | I want to... | ...so that...
 #### Paramount goal
 ##### Requirement 4 Solution |  Extracting text from an image
 
+###### Atomic requirements
+
+1. The user must be signed in as an admin
+1. User should be able browse his computer
+1. User should be able to choose an image
+1. User should be able to submit the image to the server
+1. Server should be able to receive the image
+1. Server should be able to send the image to Google Vision API
+1. Server should be able to receive the response from Google Vision API
+1. Server should be able to transform the response into readable text
+1. Server should be able to send the text back to the web page
+1. Server should report and log any error that can happen during the process
+
+###### Basic flow
 1. The user loads the application in their browser.
 1. The user enters Text Extract page from the sidebar.
 1. The user is redirected to the login page.
