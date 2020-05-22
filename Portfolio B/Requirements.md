@@ -155,10 +155,10 @@ is happening.
 
 #### Security Requirements
 
-1. Communication should take place over secure https channels
-1. Access to Database, Storage and Text Extract must be admin-only
-1. Sensitive data should be stored only in the cloud, so the breach is unlikely
-1. The web app should have a SSL certificate, to be recognised as a real website
+1. Communication should take place over secure https channels.
+1. Access to Database, Storage and Text Extract must be admin-only.
+1. Sensitive data should be stored only in the cloud, so the breach is unlikely.
+1. The web app should have a SSL certificate, to be recognised as a real website.
 
 #### Accessibility Requirements
 
@@ -173,4 +173,4 @@ Information on response times was acquired [here](https://www.nngroup.com/articl
 1. Web pages should be accessed in at most 1 second, so that the users still
 feel that they are moving freely.
 1. Text extract should not take more than 10 seconds, otherwise progress 
-bar is necessary, 
+bar is necessary.
