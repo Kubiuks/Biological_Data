@@ -35,9 +35,29 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 
 ![Use-case Diagram](images/Use-caseDiagram.png)
 
+### Functional Requirements
 
-### Requirements Solutions 
-##### Requirement 1 Solution | Viewing website
+#### User Requirements 
+
+
+As an administrator:
+
+Requirement Number | I want to... | ...so that...
+-------------------|--------------|-------------- 
+1. | Access the website | I can see the photos stored in the gallery
+2. | Login on the website |  I have more privileges from basic users
+3. | Upload images |  I can post the museum's old albums for everyone to see
+4. | Extract text from images | I can easily get the information those albums contain
+
+As a basic user:
+
+Requirement Number | I want to... | ...so that...
+-------------------|--------------|-------------- 
+5. | Access the website | I can see the images stored inside the gallery
+
+
+#### Requirements Solutions 
+##### Requirement 1/5 Solution | Viewing website
 1. The user accesses the address of the website.
 1. The home page is presented to the user.
 1. From the left side menu the user presses Gallery.
@@ -89,29 +109,29 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 3.b When the user presses on the Upload Image button, the user will be prompted with an error page.
 
 
-### Paramount goal
-#### Requirement 4 Solution |  Extracting text from an image
+#### Paramount goal
+##### Requirement 4 Solution |  Extracting text from an image
 
-1. The user loads the application in their browser
-1. The user enters Text Extract page from the sidebar
-1. The user is redirected to the login page
-1. the user provides his credentials
-1. the user enters Text Extract page
-1. The user browses their pc and chooses an image to get the text from
-1. The user presses submit button
-1. The front end sends a request to ExtractTextController
-1. the controller sends a request to the cloud vision api
-1. the controller receives the extracted text from the cloud vision api
-1. the controller returns the extracted text to front end
-1. the application displays the text in a text box for the user on the frint page
+1. The user loads the application in their browser.
+1. The user enters Text Extract page from the sidebar.
+1. The user is redirected to the login page.
+1. The user provides his credentials.
+1. The user enters Text Extract page.
+1. The user browses their PC and chooses an image to get the text from.
+1. The user presses submit button.
+1. The front end sends a request to ExtractTextController.
+1. The controller sends a request to the cloud vision api.
+1. The controller receives the extracted text from the cloud vision api.
+1. The controller returns the extracted text to front end.
+1. The application displays the text in a text box for the user on the same page.
 
 
-##### Alternative flow
-2.a The user chooses a file that is not an image. \
-2.b When the user presses on the Submit button, the user will be prompted with an error message in the text box.
+###### Alternative flow
+6.a The user chooses a file that is not an image. \
+6.b When the user presses on the Submit button, the user will be prompted with an error message in the text box.
 
-##### Exceptional flow
-3.a The application cannot communicate with the cloud vision service\
-3.b The application returns an error to the user notifying them to contact an admin about the issue.
+###### Exceptional flow
+9.a The application cannot communicate with the cloud vision service.\
+9.b The application logs the error for an administrator to investigate it.
 
 ### Non-Functional Requirements 

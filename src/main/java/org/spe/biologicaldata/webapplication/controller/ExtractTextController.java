@@ -38,7 +38,7 @@ public class ExtractTextController {
             return response;
         } catch (NoSuchElementException e) {
             StringWrapper response = new StringWrapper();
-            response.setValue("Error while extracting the text:" );
+            response.setValue("Error while extracting the text");
             return response;
         }
     }
