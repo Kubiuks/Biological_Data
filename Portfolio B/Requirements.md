@@ -144,22 +144,33 @@ Here are most important principles our design should follow:
 
 1. Errors should be prevented wherever possible. If the user still encounters
 an error, there should be help provided to deal with the error.
-2. Design should be intuitive and minimalistic, the user should not have to
+1. Design should be intuitive and minimalistic, the user should not have to
 think what they have to do to achieve their goal. The path leading to their
 goal should be straightforward.
-3. Design should follow prevalent solutions to common problems. The user
+1. Design should follow prevalent solutions to common problems. The user
 should not have to learn how our design works, instead he should be familiar
 with it from other sources.
+1. Design should provide visual feedback to the user, so that it is clear what
+is happening.
 
 #### Security Requirements
 
 1. Communication should take place over secure https channels
-2. Access to Database, Storage and Text Extract must be admin-only
-3. Sensitive data should be stored only in the cloud, so the breach is unlikely
-4. The web app should have a SSL certificate, to be recognised as a real website
+1. Access to Database, Storage and Text Extract must be admin-only
+1. Sensitive data should be stored only in the cloud, so the breach is unlikely
+1. The web app should have a SSL certificate, to be recognised as a real website
 
 #### Accessibility Requirements
 
 1. After deployment, the web app should be available for everyone on the 
 internet.
-2. The web app should be friendly to disabled visitors.
+1. The web app should be friendly to disabled visitors.
+
+#### Performance Requirements
+
+Information on response times was acquired [here](https://www.nngroup.com/articles/website-response-times/).
+
+1. Web pages should be accessed in at most 1 second, so that the users still
+feel that they are moving freely.
+1. Text extract should not take more than 10 seconds, otherwise progress 
+bar is necessary, 
