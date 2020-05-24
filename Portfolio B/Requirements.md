@@ -35,9 +35,31 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 
 ![Use-case Diagram](images/Use-caseDiagram.png)
 
+### Functional Requirements
 
-### Requirements Solutions 
-##### Requirement 1 Solution | Viewing website
+#### User Requirements 
+
+
+As an administrator:
+
+Requirement Number | I want to... | ...so that...
+-------------------|--------------|-------------- 
+1. | Access the website | I can see the photos stored in the gallery
+2. | Login on the website |  I have more privileges from basic users
+3. | Upload images |  I can post the museum's old albums for everyone to see
+4. | Extract text from images | I can easily get the information those albums contain
+
+As a basic user:
+
+Requirement Number | I want to... | ...so that...
+-------------------|--------------|-------------- 
+5. | Access the website | I can see the images stored inside the gallery
+
+
+#### Requirements Solutions 
+##### Requirement 1/5 Solution | Viewing website
+
+###### Basic flow
 1. The user accesses the address of the website.
 1. The home page is presented to the user.
 1. From the left side menu the user presses Gallery.
@@ -55,6 +77,8 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 1.a The user does not have internet. User case ends.
 
 ##### Requirement 2 Solution | Login
+
+###### Basic flow
 1. The user accesses the website 
 1. From the left side menu, the user presses on Login
 1. The user is prompted with the log in page
@@ -71,6 +95,8 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 4.a The user does not have an account. User case ends.
 
 ##### Requirement 3 Solution | Upload an image
+
+###### Basic flow
 1. The user accesses the website and logs in.
 1. The user presses on Gallery.
 1. The user presses on the Choose File button at the top of the page and chooses an image.
@@ -89,26 +115,82 @@ website from curiosity and wants an easy way of accessing the museum's archives.
 3.b When the user presses on the Upload Image button, the user will be prompted with an error page.
 
 
+#### Paramount goal
+##### Requirement 4 Solution |  Extracting text from an image
 
-#### Requirement 4 Solution |  Extracting text from an image
+###### Atomic requirements
 
-1. The user loads the application in their browser
-1. The user enters their login details in the front page
-1. The user navigates to the "Upload image" section
-1. The user browses their pc and chooses an image to upload
-1. The image gets stored in the database and gallery
-1. The user navigates to the "text extract" section
-1. the user chooses the previous image from the gallery
-1. the application sends a request to the cloud vision api
-1. the application receives the request from the cloud vision api
-1. the application displays the text in a text box for the user to edit and save.
+1. The user must be signed in as an admin
+1. User should be able browse his computer
+1. User should be able to choose an image
+1. User should be able to submit the image to the server
+1. Server should be able to receive the image
+1. Server should be able to send the image to Google Vision API
+1. Server should be able to receive the response from Google Vision API
+1. Server should be able to transform the response into readable text
+1. Server should be able to send the text back to the web page
+1. Server should report and log any error that can happen during the process
+
+###### Basic flow
+1. The user loads the application in their browser.
+1. The user enters Text Extract page from the sidebar.
+1. The user is redirected to the login page.
+1. The user provides his credentials.
+1. The user enters Text Extract page.
+1. The user browses their PC and chooses an image to get the text from.
+1. The user presses submit button.
+1. The front end sends a request to ExtractTextController.
+1. The controller sends a request to the cloud vision api.
+1. The controller receives the extracted text from the cloud vision api.
+1. The controller returns the extracted text to front end.
+1. The application displays the text in a text box for the user on the same page.
 
 
-##### Alternative flow
- 1. the desired image is already stored in the application
- 2. The user can continue the previous steps without needing to upload an image
+###### Alternative flow
+6.a The user chooses a file that is not an image. \
+6.b When the user presses on the Submit button, the user will be prompted with an error message in the text box.
 
-##### Exceptional flow
- 1. The application cannot communicate with the cloud vision service
- 2. The application returns an error to the user notifying them to contact an admin about the issue.
+###### Exceptional flow
+9.a The application cannot communicate with the cloud vision service.\
+9.b The application logs the error for an administrator to investigate it.
 
+### Non-Functional Requirements 
+
+#### Usability Requirements
+
+In order to improve the "user experience" for people visiting the web app,
+we had to consider issues relating to ease of access and use of the website.
+Here are most important principles our design should follow:
+
+1. Errors should be prevented wherever possible. If the user still encounters
+an error, there should be help provided to deal with the error.
+1. Design should be intuitive and minimalistic, the user should not have to
+think what they have to do to achieve their goal. The path leading to their
+goal should be straightforward.
+1. Design should follow prevalent solutions to common problems. The user
+should not have to learn how our design works, instead he should be familiar
+with it from other sources.
+1. Design should provide visual feedback to the user, so that it is clear what
+is happening.
+
+#### Security Requirements
+
+1. Communication should take place over secure https channels.
+1. Access to Database, Storage and Text Extract must be admin-only.
+1. Sensitive data should be stored only in the cloud, so the breach is unlikely.
+1. The web app should have a SSL certificate, to be recognised as a real website.
+
+#### Accessibility Requirements
+
+1. After deployment, the web app should be available for everyone on the 
+internet.
+1. The web app should be friendly to disabled visitors.
+
+#### Performance Requirements
+
+Information on response times was acquired [here](https://www.nngroup.com/articles/website-response-times/).
+
+1. Web pages should be accessed in at most 1 second, so that the users still
+feel that they are moving freely.
+1. Text extract should not take more than 10 seconds, otherwise progress 
+bar is necessary.
