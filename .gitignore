@@ -24,7 +24,6 @@ target/
 *.iws
 *.iml
 *.ipr
-*.JPG
 *.jpg
 *.jpeg
 
